@@ -20,7 +20,7 @@ namespace test
                 typeof(RenderMesh)
                 );
 
-            // 此处的NativeArray仅用于给Entities赋值，所以使用Allocator 的 Temp 存储类型
+            // 此处的NativeArray仅用于给Entities赋值，所以使用Allocator的Temp存储类型
             NativeArray<Entity> entitiesArray = new NativeArray<Entity>(1, Allocator.Temp);
             entityManager.CreateEntity(entityArchetype, entitiesArray);
             for (var i = 0; i < entitiesArray.Length; i++) {
