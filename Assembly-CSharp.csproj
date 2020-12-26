@@ -175,6 +175,12 @@
  <Reference Include="Unity.Transforms.Hybrid">
  <HintPath>G:/UnityProjectFiles/ECSStudio/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Rendering.Hybrid">
+ <HintPath>G:/UnityProjectFiles/ECSStudio/Library/ScriptAssemblies/Unity.Rendering.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Rendering.Hybrid.Editor">
+ <HintPath>G:/UnityProjectFiles/ECSStudio/Library/ScriptAssemblies/Unity.Rendering.Hybrid.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/2019/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
  </Reference>

@@ -1,6 +1,10 @@
 ﻿using component;
+using Unity.Collections;
 using UnityEngine;
 using Unity.Entities;
+using Unity.Transforms;
+using Random = UnityEngine.Random;
+using Unity.Rendering;
 
 namespace test
 {
@@ -9,9 +13,21 @@ namespace test
         private void Start()
         {
             EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            Entity entity = entityManager.CreateEntity(typeof(LevelComponent));
-            
-            entityManager.SetComponentData(entity, new LevelComponent{level = 10});
+
+            EntityArchetype entityArchetype = entityManager.CreateArchetype(
+                typeof(LevelComponent),
+                typeof(Translation)
+                );
+
+            // 此处的NativeArray仅用于给Entities赋值，所以使用Allocator 的 Temp 存储类型
+            NativeArray<Entity> entitiesArray = new NativeArray<Entity>(1, Allocator.Temp);
+            entityManager.CreateEntity(entityArchetype, entitiesArray);
+            for (var i = 0; i < entitiesArray.Length; i++) {
+                Entity entity = entitiesArray[i];
+                entityManager.SetComponentData(entity, new LevelComponent{level = Random.Range(10, 20)});
+            }
+
+            entitiesArray.Dispose();
         }
     }
 }
