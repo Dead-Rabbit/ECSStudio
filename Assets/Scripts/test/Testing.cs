@@ -16,7 +16,8 @@ namespace test
 
             EntityArchetype entityArchetype = entityManager.CreateArchetype(
                 typeof(LevelComponent),
-                typeof(Translation)
+                typeof(Translation),
+                typeof(RenderMesh)
                 );
 
             // 此处的NativeArray仅用于给Entities赋值，所以使用Allocator 的 Temp 存储类型
