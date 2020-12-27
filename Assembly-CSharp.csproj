@@ -59,7 +59,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\component\LevelComponent.cs" />
+     <Compile Include="Assets\Scripts\component\MoveSpeedComponent.cs" />
      <Compile Include="Assets\Scripts\system\LevelUpSystem.cs" />
+     <Compile Include="Assets\Scripts\system\MoveSystem.cs" />
      <Compile Include="Assets\Scripts\test\Testing.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>F:/unityFiles/ECSStudio/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

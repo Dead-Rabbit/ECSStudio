@@ -7,10 +7,10 @@ namespace system
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref LevelComponent levelComponent) =>
-            {
-                levelComponent.level += 1f * Time.DeltaTime;
-            });
+            // Entities.ForEach((ref LevelComponent levelComponent, ref MoveSpeedComponent speedComponent) =>
+            // {
+            //     levelComponent.level += f * Time.DeltaTime;
+            // });
         }
     }
 }
