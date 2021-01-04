@@ -1,0 +1,230 @@
+fileFormatVersion: 2
+guid: 0a8fbb9e94772394e92089f20c408d96
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: 000
+  - first:
+      1: 100002
+    second: //RootNode
+  - first:
+      1: 100004
+    second: Bone002
+  - first:
+      1: 100006
+    second: Bone003
+  - first:
+      1: 100008
+    second: Bone004
+  - first:
+      1: 100010
+    second: Bone005
+  - first:
+      1: 100012
+    second: Bone006
+  - first:
+      1: 100014
+    second: Bone007
+  - first:
+      1: 100016
+    second: Bone008
+  - first:
+      1: 100018
+    second: Bone010
+  - first:
+      1: 100020
+    second: Bone012
+  - first:
+      1: 100022
+    second: Bone013
+  - first:
+      1: 100024
+    second: Dummy001
+  - first:
+      1: 100026
+    second: HH_shenti
+  - first:
+      1: 100028
+    second: HH_tou
+  - first:
+      1: 100030
+    second: Monster_BaMuMan
+  - first:
+      1: 100032
+    second: NAME
+  - first:
+      4: 400000
+    second: 000
+  - first:
+      4: 400002
+    second: //RootNode
+  - first:
+      4: 400004
+    second: Bone002
+  - first:
+      4: 400006
+    second: Bone003
+  - first:
+      4: 400008
+    second: Bone004
+  - first:
+      4: 400010
+    second: Bone005
+  - first:
+      4: 400012
+    second: Bone006
+  - first:
+      4: 400014
+    second: Bone007
+  - first:
+      4: 400016
+    second: Bone008
+  - first:
+      4: 400018
+    second: Bone010
+  - first:
+      4: 400020
+    second: Bone012
+  - first:
+      4: 400022
+    second: Bone013
+  - first:
+      4: 400024
+    second: Dummy001
+  - first:
+      4: 400026
+    second: HH_shenti
+  - first:
+      4: 400028
+    second: HH_tou
+  - first:
+      4: 400030
+    second: Monster_BaMuMan
+  - first:
+      4: 400032
+    second: NAME
+  - first:
+      21: 2100000
+    second: Monster_BaMuMan
+  - first:
+      43: 4300000
+    second: Monster_BaMuMan
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Monster_BaMuMan
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Monster_BaMuMan
+    second: {fileID: 2100000, guid: f21dc18cd034bc146a54eeb60e465a77, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties:
+    - '#IMPORTTANGENT2'
+    - '#LightProbeUsage'
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    fileIdsGeneration: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 2
+    tangentImportMode: 2
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 2
+    normalSmoothingSource: 0
+  referencedClips:
+  - 2dfc318aed0699b48aef7dbe8a55ba61
+  - 433726313ddb43948bb6dc4392febd91
+  - 9e009a2ec6fcf6342aea13cf688b7929
+  - 87886d3b43db65447b8e3aeb4cdd520f
+  - 75a87d192bff1424eb24db52bb0d7dae
+  - 60e1c81b8850f754d8057f33b1519d9b
+  - 3145c2c42708aee4aa997bb2f8d6d04e
+  - 4e0a532f286778f4d97ffc0bef8916e9
+  - a2623461295bd7249abb3b97209c1fb2
+  - a48bbc994e1ca8f4db58ebeb7eb09e16
+  - 2fec6f0cd856f244b89158f8582d2517
+  - 7e85a0e886fc7e94b8c59ff685703b86
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
