@@ -25,6 +25,7 @@ public class DFG_API : MonoBehaviour
             public MessageInput<MyNode, int> MyInput;
             public MessageOutput<MyNode, int> MyOutput;
         }
+        
         // Init 用以在初始化一个节点时, 设置 INodeData
         protected override void Init(InitContext ctx)
         {
@@ -46,6 +47,7 @@ public class DFG_API : MonoBehaviour
                 msg + 1
             );
         }
+        
         //  OnUpdate 会在 NodeSet.Update() 时调用, 这个过程和 rendering 没有关系, 但是方便你和游戏的 Update 做嫁接.
         protected override void OnUpdate(in UpdateContext ctx)
         {
@@ -54,14 +56,15 @@ public class DFG_API : MonoBehaviour
 
         // 第二类数据是 IKernelData, 处理该数据的阶段被称为 Rendering
         //  IKernelData 非常类似于 shader 中的 uniform
-
         public struct KernelData : IKernelData { }
+        
         // 和 simulation 阶段类似, 定义了 rendering 阶段该节点如何接受什么样的输入和输出
         public struct KernelDefs : IKernelPortDefinition
         {
             public DataInput<MyNode, float> InputA, InputB;
             public DataOutput<MyNode, float> Output;
         }
+        
         // IGraphKernel 是节点执行具体功能的核心, Execute 方法仅在上游 port 被 resolve 之后调用, 这样确保了 graph 的执行顺序
         // 该方法最好使用 Burst 编译来提高性能
         public struct GraphKernel : IGraphKernel<KernelData, KernelDefs>
