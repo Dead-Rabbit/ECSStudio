@@ -1,5 +1,4 @@
-﻿
-using Unity.DataFlowGraph;
+﻿using Unity.DataFlowGraph;
 using UnityEngine;
 
 public class DFG_API : MonoBehaviour
