@@ -2,25 +2,32 @@ using Unity.Animation;
 using Unity.DataFlowGraph;
 using Unity.Entities;
 using UnityEngine;
-
+using Debug = UnityEngine.Debug;
 #if UNITY_EDITOR
 using Unity.Animation.Hybrid;
 
 [ConverterVersion("MyFirstClip_ClipPlayer", 1)]
 public class MyFirstClip_ClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
 {
-    public AnimationClip Clip;
+    public AnimationClip Clip1;
+    public AnimationClip Clip2;
+
+    private InputChangeClip _inputChangeClip;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        if (Clip == null)
+        _inputChangeClip = InputChangeClip.Instance;
+        Debug.Log(_inputChangeClip.ToString() + " - _inputChangeClip");
+        if (Clip1 == null)
             return;
 
-        conversionSystem.DeclareAssetDependency(gameObject, Clip);
+        _inputChangeClip.RegisterInputEntity(entity);
+
+        conversionSystem.DeclareAssetDependency(gameObject, Clip1);
 
         dstManager.AddComponentData(entity, new MyFirstClip_PlayClipComponent
         {
-            Clip = conversionSystem.BlobAssetStore.GetClip(Clip)
+            Clip = conversionSystem.BlobAssetStore.GetClip(Clip1)
         });
 
         dstManager.AddComponent<DeltaTime>(entity);
