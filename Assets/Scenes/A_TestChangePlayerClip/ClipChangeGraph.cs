@@ -16,18 +16,18 @@ public class ClipChangeGraph : AnimationGraphBase
 
     public override void PreProcessData<T>(T data)
     {
-        // if (data is RigComponent)
-        // {
-        //     var rig = data as RigComponent;
-        //
-        //     for (var boneIter = 0; boneIter < rig.Bones.Length; boneIter++)
-        //     {
-        //         if (MotionName == rig.Bones[boneIter].name)
-        //         {
-        //             m_MotionId = RigGenerator.ComputeRelativePath(rig.Bones[boneIter], rig.transform);
-        //         }
-        //     }
-        // }
+        if (data is RigComponent)
+        {
+            var rig = data as RigComponent;
+
+            for (var boneIter = 0; boneIter < rig.Bones.Length; boneIter++)
+            {
+                if (MotionName == rig.Bones[boneIter].name)
+                {
+                    m_MotionId = RigGenerator.ComputeRelativePath(rig.Bones[boneIter], rig.transform);
+                }
+            }
+        }
     }
 
     public override void AddGraphSetupComponent(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
