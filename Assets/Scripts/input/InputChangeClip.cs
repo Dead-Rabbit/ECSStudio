@@ -23,7 +23,7 @@ public class InputChangeClip : AnimationInputBase<ChangeClipSampleData>
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            index = index + 1;
+            index = (index + 1) % 2;
         }
     }
 

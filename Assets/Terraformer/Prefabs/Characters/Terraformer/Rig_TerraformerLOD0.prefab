@@ -3883,7 +3883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Clip1: {fileID: 7400000, guid: 96bbe3b14e8d7ce4abd64e8ba3f4cb3c, type: 3}
-  Clip2: {fileID: -3100369314251171874, guid: 797ee3a9b3df9274a80390ff9757aae7, type: 3}
+  Clip2: {fileID: 7400000, guid: 4d5a1e9dc0cadee468b49bd9ea11bfdd, type: 3}
   input: {fileID: 0}
 --- !u!1 &3965685608614050076
 GameObject:
