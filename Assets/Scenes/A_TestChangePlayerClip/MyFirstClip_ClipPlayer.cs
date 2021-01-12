@@ -19,10 +19,12 @@ public class MyFirstClip_ClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
         if (Clip1 == null || Clip2 == null)
             return;
 
-        dstManager.AddBuffer<SampleClip>(entity);
-
         conversionSystem.DeclareAssetDependency(gameObject, Clip1);
         conversionSystem.DeclareAssetDependency(gameObject, Clip2);
+
+        DynamicBuffer<SampleClip> buffer = dstManager.AddBuffer<SampleClip>(entity);
+        buffer.Add(new SampleClip { Clip = conversionSystem.BlobAssetStore.GetClip(Clip1) });
+        buffer.Add(new SampleClip { Clip = conversionSystem.BlobAssetStore.GetClip(Clip2) });
 
         dstManager.AddComponentData(entity, new MyFirstClip_PlayClipComponent
         {
@@ -36,6 +38,7 @@ public class MyFirstClip_ClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
 
 public struct ChangeClipSampleData : ISampleData
 {
+    public bool ifModify;
     public int index;
 }
 
@@ -190,10 +193,12 @@ public class TestInputAndClipComponentSystem : SystemBase
     protected override void OnUpdate()
     {
         Entities
-            .WithChangeFilter<InputChangeClip>()
-            .ForEach((EntityManager manager, Entity e, ref MyFirstClip_PlayClipComponent clipComponent, in ChangeClipSampleData inputData) =>
+            .ForEach((Entity e, ref MyFirstClip_PlayClipComponent clipComponent, ref ChangeClipSampleData input, ref DynamicBuffer<SampleClip> buffer, in ChangeClipSampleData inputData) =>
             {
-                clipComponent.Clip = entityManager.GetBuffer<SampleClip>(e)[1].Clip;
+                if (input.ifModify) {
+                    clipComponent.Clip = buffer[1].Clip;
+                    Debug.Log(buffer.Length);
+                }
             }).Run();
     }
 }

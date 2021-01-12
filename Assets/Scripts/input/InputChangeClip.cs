@@ -15,14 +15,16 @@ public class InputChangeClip : AnimationInputBase<ChangeClipSampleData>
         if (data.index != index)
         {
             Debug.Log("Change Value to " + data.index);
+            data.ifModify = true;
+            data.index = index;
         }
-        data.index = index;
     }
 
     private void UpdateParameters()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
+            Debug.Log("Push C");
             index = index + 1;
         }
     }
