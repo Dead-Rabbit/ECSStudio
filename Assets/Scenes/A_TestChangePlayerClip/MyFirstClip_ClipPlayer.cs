@@ -112,7 +112,6 @@ public class MyFirstClip_PlayClipSystem : SystemBase
             {
                 var state = CreateGraph(e, m_GraphSystem, ref rig, ref animation);
                 ecb.AddComponent(e, state);
-                Debug.Log("Create Graph");
             }).Run();
 
         // Update graph if the animation component changed
@@ -123,7 +122,6 @@ public class MyFirstClip_PlayClipSystem : SystemBase
             .ForEach((Entity e, ref MyFirstClip_PlayClipComponent animation, ref MyFirstClip_PlayClipStateComponent state) =>
             {
                 m_GraphSystem.Set.SendMessage(state.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Clip, animation.Clip);
-                Debug.Log("Update Graph");
             }).Run();
 
         // Destroy graph for which the entity is missing the PlayClipComponent
@@ -135,7 +133,6 @@ public class MyFirstClip_PlayClipSystem : SystemBase
             .ForEach((Entity e, ref MyFirstClip_PlayClipStateComponent state) =>
             {
                 m_GraphSystem.Dispose(state.Graph);
-                Debug.Log("Destroy Graph");
             }).Run();
 
         if (m_AnimationDataQuery.CalculateEntityCount() > 0)

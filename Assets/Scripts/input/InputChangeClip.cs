@@ -14,7 +14,6 @@ public class InputChangeClip : AnimationInputBase<ChangeClipSampleData>
         UpdateText();
         if (data.index != index)
         {
-            Debug.Log("Change Value to " + data.index);
             data.ifModify = true;
             data.index = index;
         }
@@ -24,7 +23,6 @@ public class InputChangeClip : AnimationInputBase<ChangeClipSampleData>
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Debug.Log("Push C");
             index = index + 1;
         }
     }
