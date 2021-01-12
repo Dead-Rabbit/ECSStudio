@@ -154,7 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RigPrefab: {fileID: 3965685608614050066, guid: f4c00ce737751a041b04ceea7ceabf18,
     type: 3}
-  GraphPrefab: {fileID: 0}
+  GraphPrefab: {fileID: 5972960455046783283, guid: 902b24dc81d9aea47a56920306ec351f,
+    type: 3}
   CountX: 1
   CountY: 1
 --- !u!4 &1295797612
