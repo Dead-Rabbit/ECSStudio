@@ -12,16 +12,17 @@ public class MyFirstClip_ClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
     public AnimationClip Clip1;
     public AnimationClip Clip2;
 
-    private InputChangeClip _inputChangeClip;
+    // private InputChangeClip _inputChangeClip;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        _inputChangeClip = InputChangeClip.Instance;
-        Debug.Log(_inputChangeClip.ToString() + " - _inputChangeClip");
+        // _inputChangeClip = InputChangeClip.Instance;
+        // Debug.Log(_inputChangeClip.ToString() + " - _inputChangeClip");
+
         if (Clip1 == null)
             return;
 
-        _inputChangeClip.RegisterInputEntity(entity);
+        // _inputChangeClip.RegisterInputEntity(entity);
 
         conversionSystem.DeclareAssetDependency(gameObject, Clip1);
 
