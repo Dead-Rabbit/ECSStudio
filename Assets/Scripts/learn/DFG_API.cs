@@ -1,4 +1,5 @@
-﻿using Unity.DataFlowGraph;
+﻿
+using Unity.DataFlowGraph;
 using UnityEngine;
 
 public class DFG_API : MonoBehaviour
@@ -87,6 +88,7 @@ public class DFG_API : MonoBehaviour
         using (var set = new NodeSet())
         {
             m_Set = set;
+            
             NodeHandle<MyNode>
                 a = set.Create<MyNode>(),
                 b = set.Create<MyNode>(),
@@ -154,9 +156,9 @@ public class DFG_API : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // 你可以在 update 时尝试修改 graph 运行过程中所用到的参数
-        m_Set.Update();
-    }
+    // void Update()
+    // {
+    //     // 你可以在 update 时尝试修改 graph 运行过程中所用到的参数
+    //     m_Set.Update();
+    // }
 }
