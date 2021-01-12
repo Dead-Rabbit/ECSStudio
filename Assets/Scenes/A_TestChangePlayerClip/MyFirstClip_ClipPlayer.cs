@@ -11,13 +11,17 @@ public class MyFirstClip_ClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
 {
     public AnimationClip Clip1;
     public AnimationClip Clip2;
-
-    // private InputChangeClip _inputChangeClip;
+    public InputChangeClip input;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         if (Clip1 == null || Clip2 == null)
             return;
+
+        if (null != input)
+        {
+            input.RegisterEntity(entity);
+        }
 
         conversionSystem.DeclareAssetDependency(gameObject, Clip1);
         conversionSystem.DeclareAssetDependency(gameObject, Clip2);
@@ -29,6 +33,11 @@ public class MyFirstClip_ClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.AddComponentData(entity, new MyFirstClip_PlayClipComponent
         {
             Clip = conversionSystem.BlobAssetStore.GetClip(Clip1)
+        });
+        dstManager.AddComponentData(entity, new ChangeClipSampleData
+        {
+            ifModify = false,
+            index = 0
         });
 
         dstManager.AddComponent<DeltaTime>(entity);
@@ -103,6 +112,7 @@ public class MyFirstClip_PlayClipSystem : SystemBase
             {
                 var state = CreateGraph(e, m_GraphSystem, ref rig, ref animation);
                 ecb.AddComponent(e, state);
+                Debug.Log("Create Graph");
             }).Run();
 
         // Update graph if the animation component changed
@@ -113,6 +123,7 @@ public class MyFirstClip_PlayClipSystem : SystemBase
             .ForEach((Entity e, ref MyFirstClip_PlayClipComponent animation, ref MyFirstClip_PlayClipStateComponent state) =>
             {
                 m_GraphSystem.Set.SendMessage(state.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Clip, animation.Clip);
+                Debug.Log("Update Graph" + animation.Clip);
             }).Run();
 
         // Destroy graph for which the entity is missing the PlayClipComponent
@@ -124,6 +135,7 @@ public class MyFirstClip_PlayClipSystem : SystemBase
             .ForEach((Entity e, ref MyFirstClip_PlayClipStateComponent state) =>
             {
                 m_GraphSystem.Dispose(state.Graph);
+                Debug.Log("Destroy Graph");
             }).Run();
 
         if (m_AnimationDataQuery.CalculateEntityCount() > 0)
@@ -194,11 +206,12 @@ public class TestInputAndClipComponentSystem : SystemBase
     {
         Entities
             .ForEach((Entity e, ref MyFirstClip_PlayClipComponent clipComponent, ref ChangeClipSampleData input, ref DynamicBuffer<SampleClip> buffer, in ChangeClipSampleData inputData) =>
+        {
+            if (input.ifModify)
             {
-                if (input.ifModify) {
-                    clipComponent.Clip = buffer[1].Clip;
-                    Debug.Log(buffer.Length);
-                }
-            }).Run();
+                clipComponent.Clip = buffer[1].Clip;
+                input.ifModify = false;
+            }
+        }).Run();
     }
 }
