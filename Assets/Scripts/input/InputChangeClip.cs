@@ -1,35 +1,44 @@
 using System;
-using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Animation;
+using Debug = UnityEngine.Debug;
 
-public class InputChangeClip : MonoBehaviour
+public class InputChangeClip : AnimationInputBase<ChangeClipSampleData>
 {
-    private static InputChangeClip _instance;
+    private Int32 index;
 
-    public static InputChangeClip Instance => _instance;
-
-    public void Awake()
+    protected override void UpdateComponentData(ref ChangeClipSampleData data)
     {
-        _instance = gameObject.GetComponent<InputChangeClip>();
+        UpdateParameters();
+        UpdateText();
+        if (data.index != index)
+        {
+            Debug.Log("Change Value to " + data.index);
+        }
+        data.index = index;
     }
 
-    public Text MenuText;
-
-    private Entity _entity;
-
-    public void RegisterInputEntity(Entity entity)
-    {
-        _entity = entity;
-        Debug.Log("注册成功");
-    }
-
-    public void Update()
+    private void UpdateParameters()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            // 尝试按下C键后修改 MyFirstClip_PlayClipComponent 中的Clip值
-            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            index = index + 1;
         }
+    }
+
+    private void UpdateText()
+    {
+        // MenuText.text =
+        //     $"Down-Up : Speed (current = {Speed})\n" +
+        //     $"Left-Right : ClipTime ({ClipTime})\n" +
+        //     $"P : Toggle Play ({Play})\n" +
+        //     $"N : Toggle NormalizedTime ({NormalizedTime})\n" +
+        //     $"T : Toggle LoopTime ({LoopTime})\n" +
+        //     $"V : Toggle LoopValues ({LoopValues})\n" +
+        //     $"C : Toggle CycleRootMotion ({CycleRootMotion})\n" +
+        //     $"I : Toggle InPlace ({InPlace})\n" +
+        //     $"B : Toggle BankPivot ({BankPivot})\n" +
+        //     $"R : Reset";
     }
 }

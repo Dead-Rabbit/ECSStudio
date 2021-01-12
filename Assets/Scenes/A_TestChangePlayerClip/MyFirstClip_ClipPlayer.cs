@@ -16,15 +16,13 @@ public class MyFirstClip_ClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        // _inputChangeClip = InputChangeClip.Instance;
-        // Debug.Log(_inputChangeClip.ToString() + " - _inputChangeClip");
-
-        if (Clip1 == null)
+        if (Clip1 == null || Clip2 == null)
             return;
 
-        // _inputChangeClip.RegisterInputEntity(entity);
+        dstManager.AddBuffer<SampleClip>(entity);
 
         conversionSystem.DeclareAssetDependency(gameObject, Clip1);
+        conversionSystem.DeclareAssetDependency(gameObject, Clip2);
 
         dstManager.AddComponentData(entity, new MyFirstClip_PlayClipComponent
         {
@@ -35,6 +33,11 @@ public class MyFirstClip_ClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
     }
 }
 #endif
+
+public struct ChangeClipSampleData : ISampleData
+{
+    public int index;
+}
 
 public struct MyFirstClip_PlayClipComponent : IComponentData
 {
@@ -164,5 +167,33 @@ public class MyFirstClip_PlayClipSystem : SystemBase
         set.SendMessage(data.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Clip, playClip.Clip);
 
         return data;
+    }
+}
+
+public struct SampleClip : IBufferElementData
+{
+    public BlobAssetReference<Clip> Clip;
+}
+
+/**
+ * 测试System
+ */
+public class TestInputAndClipComponentSystem : SystemBase
+{
+    private EntityManager entityManager;
+
+    protected override void OnCreate()
+    {
+        entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+    }
+
+    protected override void OnUpdate()
+    {
+        Entities
+            .WithChangeFilter<InputChangeClip>()
+            .ForEach((EntityManager manager, Entity e, ref MyFirstClip_PlayClipComponent clipComponent, in ChangeClipSampleData inputData) =>
+            {
+                clipComponent.Clip = entityManager.GetBuffer<SampleClip>(e)[1].Clip;
+            }).Run();
     }
 }
