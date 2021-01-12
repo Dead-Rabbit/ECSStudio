@@ -123,7 +123,7 @@ public class MyFirstClip_PlayClipSystem : SystemBase
             .ForEach((Entity e, ref MyFirstClip_PlayClipComponent animation, ref MyFirstClip_PlayClipStateComponent state) =>
             {
                 m_GraphSystem.Set.SendMessage(state.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Clip, animation.Clip);
-                Debug.Log("Update Graph" + animation.Clip);
+                Debug.Log("Update Graph");
             }).Run();
 
         // Destroy graph for which the entity is missing the PlayClipComponent
@@ -205,7 +205,7 @@ public class TestInputAndClipComponentSystem : SystemBase
     protected override void OnUpdate()
     {
         Entities
-            .ForEach((Entity e, ref MyFirstClip_PlayClipComponent clipComponent, ref ChangeClipSampleData input, ref DynamicBuffer<SampleClip> buffer, in ChangeClipSampleData inputData) =>
+            .ForEach((Entity e, ref ChangeClipSampleData input, ref MyFirstClip_PlayClipComponent clipComponent, in DynamicBuffer<SampleClip> buffer, in ChangeClipSampleData inputData) =>
         {
             if (input.ifModify)
             {
