@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dce45d6834b3e49ab7284f8643a9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 0}
-  MotionName: 
-  ClipTimeInit: 0
+  Clip: {fileID: 7400000, guid: b9e9cef3dba279347958650da401bc33, type: 3}
+  MotionName: teset
+  ClipTimeInit: 1
