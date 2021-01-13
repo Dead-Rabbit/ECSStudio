@@ -123,6 +123,49 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &662053280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 662053282}
+  - component: {fileID: 662053281}
+  m_Layer: 0
+  m_Name: A_TestChangePlayerClipInput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &662053281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662053280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125f6a6fd8154ca886ce3b8f15f4ad52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &662053282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662053280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.687272, y: -10.890638, z: 13.388417}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1295797610
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79ae37598176f54db2f2c136f6bed84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RigPrefab: {fileID: 3965685608614050066, guid: f4c00ce737751a041b04ceea7ceabf18,
+  RigPrefab: {fileID: 7631122604573823980, guid: 38484eee65d7f0e4e92ed08f86485cca,
     type: 3}
   GraphPrefab: {fileID: 5972960455046783283, guid: 902b24dc81d9aea47a56920306ec351f,
     type: 3}

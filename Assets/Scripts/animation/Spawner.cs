@@ -80,6 +80,7 @@ public class RigSpawnerSystem : SystemBase
                 {
                     for (var y = 0; y < spawner.CountY; ++y)
                     {
+                        Debug.Log("Add New One In Spawner");
                         var rigInstance = EntityManager.Instantiate(spawner.RigPrefab);
                         var translation = new float3(x * 1.3F, 0, y * 1.3F);
                         EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });

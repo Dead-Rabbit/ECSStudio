@@ -9,6 +9,9 @@ using UnityEngine;
 public class ClipChangeGraph : AnimationGraphBase
 {
     public AnimationClip Clip;
+
+    public AnimationClip[] Clips;
+
     public string MotionName;
     public float ClipTimeInit;
 
@@ -16,34 +19,46 @@ public class ClipChangeGraph : AnimationGraphBase
 
     public override void PreProcessData<T>(T data)
     {
-        if (data is RigComponent)
-        {
-            var rig = data as RigComponent;
-
-            for (var boneIter = 0; boneIter < rig.Bones.Length; boneIter++)
-            {
-                if (MotionName == rig.Bones[boneIter].name)
-                {
-                    m_MotionId = RigGenerator.ComputeRelativePath(rig.Bones[boneIter], rig.transform);
-                }
-            }
-        }
+        // if (data is RigComponent)
+        // {
+        //     var rig = data as RigComponent;
+        //
+        //     for (var boneIter = 0; boneIter < rig.Bones.Length; boneIter++)
+        //     {
+        //         if (MotionName == rig.Bones[boneIter].name)
+        //         {
+        //             m_MotionId = RigGenerator.ComputeRelativePath(rig.Bones[boneIter], rig.transform);
+        //         }
+        //     }
+        // }
     }
 
     public override void AddGraphSetupComponent(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         var graphSetup = new ConfigurableClipSetup
         {
-            // 考虑此处的ToDenseClip使用MyFirstClip的 BlobAssetStore
             Clip = Clip.ToDenseClip(),
             ClipTime = ClipTimeInit,
             MotionID = m_MotionId
         };
 
+        var clipBuffer = dstManager.AddBuffer<StoreClipBuffer>(entity);
+        for (int i = 0; i < Clips.Length; ++i)
+            clipBuffer.Add(new StoreClipBuffer { Clip = Clips[i].ToDenseClip() });
+
         dstManager.AddComponentData(entity, graphSetup);
+        dstManager.AddComponent<DeltaTime>(entity);
     }
 }
 #endif
+
+/**
+ * 记录当前Spawner中的所有动画Clip
+ */
+public struct StoreClipBuffer : IBufferElementData
+{
+    public BlobAssetReference<Clip> Clip;
+}
 
 public struct ConfigurableClipSetup : ISampleSetup
 {
@@ -95,7 +110,7 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         // set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Rig, rig);
         // set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
         // set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
-        // // set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Time, setup.ClipTime);
+        // set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Time, setup.ClipTime);
 
         // Connect kernel ports
         set.Connect(entityNode, deltaTimeNode, ConvertDeltaTimeToFloatNode.KernelPorts.Input);

@@ -2,6 +2,7 @@ using Unity.Entities;
 using Unity.Animation;
 using Unity.Collections;
 using Unity.DataFlowGraph;
+using Debug = UnityEngine.Debug;
 
 public interface ISampleSetup : IComponentData {};
 
@@ -28,6 +29,7 @@ public abstract class SampleSystemBase<TSampleSetup, TSampleData, TAnimationSyst
         {
             var data = CreateGraph(e, ref rig, m_AnimationSystem, ref setup);
             PostUpdateCommands.AddComponent(e, data);
+            Debug.Log("Create New Entity For Animation System");
         };
 
         m_DestroyLambda = (Entity e, ref TSampleData data) =>
