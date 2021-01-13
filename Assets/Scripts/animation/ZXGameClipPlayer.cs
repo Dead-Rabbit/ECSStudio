@@ -11,6 +11,8 @@ public class ZXGameClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
 {
     public AnimationClip Clip1;
     public AnimationClip Clip2;
+
+    // 此处使用Unity中的
     public InputChangeClip input;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)

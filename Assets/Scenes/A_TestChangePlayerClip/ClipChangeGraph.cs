@@ -55,15 +55,15 @@ public struct ConfigurableClipSetup : ISampleSetup
 public struct ConfigurableClipData : ISampleData
 {
     public GraphHandle Graph;
-    public NodeHandle<ConfigurableClipNode> ConfigurableClipNode;
+    public NodeHandle<ConfigurableClipNode> ClipNode;
 
-    public float ClipTime;
-
-    public bool UpdateConfiguration;
-    public bool InPlace;
-
-    public ClipConfigurationMask ClipOptions;
-    public StringHash MotionID;
+    // public float ClipTime;
+    //
+    // public bool UpdateConfiguration;
+    // public bool InPlace;
+    //
+    // public ClipConfigurationMask ClipOptions;
+    // public StringHash MotionID;
 }
 
 [UpdateBefore(typeof(DefaultAnimationSystemGroup))]
@@ -73,23 +73,27 @@ public class ClipChangeGraphSystem : SampleSystemBase<
     ProcessDefaultAnimationGraph
 >
 {
-    protected override ConfigurableClipData CreateGraph(Entity entity, ref Rig rig, ProcessDefaultAnimationGraph graphSystem, ref ConfigurableClipSetup setup)
+    protected override ConfigurableClipData CreateGraph(
+        Entity entity,
+        ref Rig rig,
+        ProcessDefaultAnimationGraph graphSystem,
+        ref ConfigurableClipSetup setup)
     {
         var data = new ConfigurableClipData();
 
         data.Graph = graphSystem.CreateGraph();
-        data.MotionID = setup.MotionID;
-        data.UpdateConfiguration = true;
-        data.ConfigurableClipNode = graphSystem.CreateNode<ConfigurableClipNode>(data.Graph);
+        // data.MotionID = setup.MotionID;
+        // data.UpdateConfiguration = true;
+        data.ClipNode = graphSystem.CreateNode<ConfigurableClipNode>(data.Graph);
 
         var entityNode = graphSystem.CreateNode(data.Graph, entity);
 
         var set = graphSystem.Set;
-        set.Connect(data.ConfigurableClipNode, ConfigurableClipNode.KernelPorts.Output, entityNode);
+        set.Connect(data.ClipNode, ConfigurableClipNode.KernelPorts.Output, entityNode);
 
-        set.SendMessage(data.ConfigurableClipNode, ConfigurableClipNode.SimulationPorts.Rig, rig);
-        set.SendMessage(data.ConfigurableClipNode, ConfigurableClipNode.SimulationPorts.Clip, setup.Clip);
-        set.SetData(data.ConfigurableClipNode, ConfigurableClipNode.KernelPorts.Time, setup.ClipTime);
+        set.SendMessage(data.ClipNode, ConfigurableClipNode.SimulationPorts.Rig, rig);
+        set.SendMessage(data.ClipNode, ConfigurableClipNode.SimulationPorts.Clip, setup.Clip);
+        set.SetData(data.ClipNode, ConfigurableClipNode.KernelPorts.Time, setup.ClipTime);
 
         return data;
     }
@@ -108,13 +112,21 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         Entities.WithAll<ConfigurableClipSetup, ConfigurableClipData>()
             .ForEach((Entity e, ref ConfigurableClipData data) =>
             {
-                m_AnimationSystem.Set.SetData(data.ConfigurableClipNode, ConfigurableClipNode.KernelPorts.Time, data.ClipTime);
-                if (data.UpdateConfiguration)
-                {
-                    var config = new ClipConfiguration { Mask = data.ClipOptions, MotionID = data.InPlace ? data.MotionID : 0 };
-                    m_AnimationSystem.Set.SendMessage(data.ConfigurableClipNode, ConfigurableClipNode.SimulationPorts.Configuration, config);
-                    data.UpdateConfiguration = false;
-                }
+                // m_AnimationSystem.Set.SetData(data.ConfigurableClipNode, ConfigurableClipNode.KernelPorts.Time, data.ClipTime);
+                // if (data.UpdateConfiguration)
+                // {
+                //     var config = new ClipConfiguration { Mask = data.ClipOptions, MotionID = data.InPlace ? data.MotionID : 0 };
+                //     m_AnimationSystem.Set.SendMessage(data.ConfigurableClipNode, ConfigurableClipNode.SimulationPorts.Configuration, config);
+                //     data.UpdateConfiguration = false;
+                // }
             });
+
+        Entities
+        // .WithName("ModifyConfigurableClipSetup")
+        // .WithoutBurst()
+            .ForEach((Entity e, ref PlayClipStateComponent state, ref ConfigurableClipData animation) =>
+        {
+            // m_GraphSystem.Set.SendMessage(state.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Clip, animation.Clip);
+        });
     }
 }
