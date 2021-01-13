@@ -35,7 +35,7 @@ public class ClipChangeGraph : AnimationGraphBase
 
     public override void AddGraphSetupComponent(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        var graphSetup = new ConfigurableClipSetup
+        var graphSetup = new ChangeClipSetup
         {
             Clip = Clip.ToDenseClip(),
             ClipTime = ClipTimeInit,
@@ -47,7 +47,7 @@ public class ClipChangeGraph : AnimationGraphBase
             clipBuffer.Add(new StoreClipBuffer { Clip = Clips[i].ToDenseClip() });
 
         dstManager.AddComponentData(entity, graphSetup);
-        // dstManager.AddComponent<DeltaTime>(entity);
+        dstManager.AddComponent<DeltaTime>(entity);
     }
 }
 #endif
@@ -60,14 +60,14 @@ public struct StoreClipBuffer : IBufferElementData
     public BlobAssetReference<Clip> Clip;
 }
 
-public struct ConfigurableClipSetup : ISampleSetup
+public struct ChangeClipSetup : ISampleSetup
 {
     public BlobAssetReference<Clip> Clip;
     public float ClipTime;
     public StringHash MotionID;
 }
 
-public struct ConfigurableClipData : ISampleData
+public struct ChangeClipPlayerData : ISampleData
 {
     public GraphHandle Graph;
     public NodeHandle<ClipPlayerNode> ClipNode;
@@ -83,36 +83,34 @@ public struct ConfigurableClipData : ISampleData
 
 [UpdateBefore(typeof(DefaultAnimationSystemGroup))]
 public class ClipChangeGraphSystem : SampleSystemBase<
-    ConfigurableClipSetup,
-    ConfigurableClipData,
+    ChangeClipSetup,
+    ChangeClipPlayerData,
     ProcessDefaultAnimationGraph
 >
 {
-    protected override ConfigurableClipData CreateGraph(
+    protected override ChangeClipPlayerData CreateGraph(
         Entity entity,
         ref Rig rig,
         ProcessDefaultAnimationGraph graphSystem,
-        ref ConfigurableClipSetup setup)
+        ref ChangeClipSetup setup)
     {
-        var data = new ConfigurableClipData();
+        var data = new ChangeClipPlayerData();
 
         data.Graph = graphSystem.CreateGraph();
+        data.ClipNode = graphSystem.CreateNode<ClipPlayerNode>(data.Graph);
 
         var deltaTimeNode = graphSystem.CreateNode<ConvertDeltaTimeToFloatNode>(data.Graph);
         var entityNode = graphSystem.CreateNode(data.Graph, entity);
 
         var set = graphSystem.Set;
 
-        Debug.Log("Create Change Graph");
-
-        // Send messages to set parameters on the ClipPlayerNode
-        set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
-
         // Connect kernel ports
         set.Connect(entityNode, deltaTimeNode, ConvertDeltaTimeToFloatNode.KernelPorts.Input);
         set.Connect(deltaTimeNode, ConvertDeltaTimeToFloatNode.KernelPorts.Output, data.ClipNode, ClipPlayerNode.KernelPorts.DeltaTime);
         set.Connect(data.ClipNode, ClipPlayerNode.KernelPorts.Output, entityNode, NodeSetAPI.ConnectionType.Feedback);
 
+        // Send messages to set parameters on the ClipPlayerNode
+        set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration { Mask = ClipConfigurationMask.LoopTime });
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Rig, rig);
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
@@ -120,7 +118,7 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         return data;
     }
 
-    protected override void DestroyGraph(Entity entity, ProcessDefaultAnimationGraph graphSystem, ref ConfigurableClipData data)
+    protected override void DestroyGraph(Entity entity, ProcessDefaultAnimationGraph graphSystem, ref ChangeClipPlayerData data)
     {
         graphSystem.Dispose(data.Graph);
     }
@@ -134,21 +132,21 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         // Entities.WithAll<ConfigurableClipSetup, ConfigurableClipData>()
         //     .ForEach((Entity e, ref ConfigurableClipData data) =>
         //     {
-                // m_AnimationSystem.Set.SetData(data.ConfigurableClipNode, ConfigurableClipNode.KernelPorts.Time, data.ClipTime);
-                // if (data.UpdateConfiguration)
-                // {
-                //     var config = new ClipConfiguration { Mask = data.ClipOptions, MotionID = data.InPlace ? data.MotionID : 0 };
-                //     m_AnimationSystem.Set.SendMessage(data.ConfigurableClipNode, ConfigurableClipNode.SimulationPorts.Configuration, config);
-                //     data.UpdateConfiguration = false;
-                // }
-            // });
+        // m_AnimationSystem.Set.SetData(data.ConfigurableClipNode, ConfigurableClipNode.KernelPorts.Time, data.ClipTime);
+        // if (data.UpdateConfiguration)
+        // {
+        //     var config = new ClipConfiguration { Mask = data.ClipOptions, MotionID = data.InPlace ? data.MotionID : 0 };
+        //     m_AnimationSystem.Set.SendMessage(data.ConfigurableClipNode, ConfigurableClipNode.SimulationPorts.Configuration, config);
+        //     data.UpdateConfiguration = false;
+        // }
+        // });
 
-        // Entities
+        Entities
         // .WithName("ModifyConfigurableClipSetup")
         // .WithoutBurst()
-        //     .ForEach((Entity e, ref ConfigurableClipData data, ref ConfigurableClipSetup setup) =>
-        // {
-        // m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
-        // });
+            .ForEach((Entity e, ref ChangeClipPlayerData data, ref ChangeClipSetup setup) =>
+        {
+            m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
+        });
     }
 }
