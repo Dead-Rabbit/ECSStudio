@@ -8,7 +8,7 @@ public class InputChangeClip : AnimationInputBase<ChangeClipSampleData>
 {
     private Int32 index;
 
-    protected override void UpdateComponentData(ref ChangeClipSampleData data)
+    protected override bool UpdateComponentData(ref ChangeClipSampleData data)
     {
         UpdateParameters();
         UpdateText();
@@ -16,7 +16,10 @@ public class InputChangeClip : AnimationInputBase<ChangeClipSampleData>
         {
             data.ifModify = true;
             data.index = index;
+            return true;
         }
+
+        return false;
     }
 
     private void UpdateParameters()

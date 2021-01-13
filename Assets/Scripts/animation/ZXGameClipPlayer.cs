@@ -190,13 +190,15 @@ public class InputAndChangeClipComponentSystem : SystemBase
     protected override void OnUpdate()
     {
         Entities
-            .ForEach((Entity e, ref ChangeClipSampleData input, ref PlayClipComponent clipComponent, in DynamicBuffer<SampleClip> buffer, in ChangeClipSampleData inputData) =>
-        {
-            if (input.ifModify)
+            .WithChangeFilter<ChangeClipSampleData>()
+            .ForEach((Entity e, ref ChangeClipSampleData input, ref PlayClipComponent clipComponent, in DynamicBuffer<SampleClip> buffer) =>
             {
-                clipComponent.Clip = buffer[input.index].Clip;
-                input.ifModify = false;
-            }
-        }).Run();
+                Debug.Log("Modify And Update");
+                if (input.ifModify)
+                {
+                    clipComponent.Clip = buffer[input.index].Clip;
+                    input.ifModify = false;
+                }
+            }).Run();
     }
 }

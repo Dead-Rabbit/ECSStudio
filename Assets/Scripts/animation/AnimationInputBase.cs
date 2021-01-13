@@ -48,13 +48,15 @@ public abstract class AnimationInputBase<T> : AnimationInputBase
                 return;
 
             var data = entityManager.GetComponentData<T>(currentEntity);
-            UpdateComponentData(ref data);
-            entityManager.SetComponentData(currentEntity, data);
+            if (UpdateComponentData(ref data))
+            {
+                entityManager.SetComponentData(currentEntity, data);
+            }
         }
     }
 
     public override Entity ActiveEntity =>
         (m_RigEntities?.Count > 0) ? m_RigEntities[m_ActiveEntityIndex] : Entity.Null;
 
-    protected abstract void UpdateComponentData(ref T data);
+    protected abstract bool UpdateComponentData(ref T data);
 }
