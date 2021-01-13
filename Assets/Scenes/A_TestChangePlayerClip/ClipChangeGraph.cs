@@ -141,12 +141,10 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         // }
         // });
 
-        Entities
-        // .WithName("ModifyConfigurableClipSetup")
-        // .WithoutBurst()
-            .ForEach((Entity e, ref ChangeClipPlayerData data, ref ChangeClipSetup setup) =>
-        {
-            m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
-        });
+        // Entities
+        //     .ForEach((Entity e, ref ChangeClipPlayerData data, ref ChangeClipSetup setup) =>
+        // {
+        //     m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
+        // });
     }
 }

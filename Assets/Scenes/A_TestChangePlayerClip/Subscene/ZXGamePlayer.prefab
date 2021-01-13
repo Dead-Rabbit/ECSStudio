@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 1320490109936844649}
   - component: {fileID: 8112371935107210497}
   - component: {fileID: 1530287160556787637}
-  - component: {fileID: 1468651621818431800}
   m_Layer: 0
   m_Name: ZXGamePlayer
   m_TagString: Untagged
@@ -170,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d52c1de4f76b1545946555cfe16e162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RenderBones: 1
+  RenderBones: 0
   BoneShape: 1
   Color: {r: 0.8679245, g: 0.34777343, b: 0.08597365, a: 0.6666667}
   Size: 1
@@ -261,19 +260,6 @@ MonoBehaviour:
   - Id: RightHandIKWeight
     DefaultValue: 0
   IntChannels: []
---- !u!114 &1468651621818431800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1320490109936870153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConversionMode: 0
 --- !u!1 &1320490109936870155
 GameObject:
   m_ObjectHideFlags: 0

@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79ae37598176f54db2f2c136f6bed84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RigPrefab: {fileID: 1320490109936870153, guid: 0c0eca16c42ebd54bb68a652f4f19756,
+  RigPrefab: {fileID: 3342799301996605460, guid: 20105b53c790ed945ad3a9b0cf2d6e33,
     type: 3}
   GraphPrefab: {fileID: 5972960455046783283, guid: 902b24dc81d9aea47a56920306ec351f,
     type: 3}
