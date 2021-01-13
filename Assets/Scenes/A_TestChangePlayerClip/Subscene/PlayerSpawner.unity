@@ -199,8 +199,8 @@ MonoBehaviour:
     type: 3}
   GraphPrefab: {fileID: 5972960455046783283, guid: 902b24dc81d9aea47a56920306ec351f,
     type: 3}
-  CountX: 1
-  CountY: 1
+  CountX: 6
+  CountY: 6
 --- !u!4 &1295797612
 Transform:
   m_ObjectHideFlags: 0
