@@ -55,7 +55,7 @@ public struct ConfigurableClipSetup : ISampleSetup
 public struct ConfigurableClipData : ISampleData
 {
     public GraphHandle Graph;
-    public NodeHandle<ConfigurableClipNode> ClipNode;
+    public NodeHandle<ClipPlayerNode> ClipNode;
 
     // public float ClipTime;
     //
@@ -84,16 +84,29 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         data.Graph = graphSystem.CreateGraph();
         // data.MotionID = setup.MotionID;
         // data.UpdateConfiguration = true;
-        data.ClipNode = graphSystem.CreateNode<ConfigurableClipNode>(data.Graph);
+        data.ClipNode = graphSystem.CreateNode<ClipPlayerNode>(data.Graph);
 
+        var deltaTimeNode = graphSystem.CreateNode<ConvertDeltaTimeToFloatNode>(data.Graph);
         var entityNode = graphSystem.CreateNode(data.Graph, entity);
 
         var set = graphSystem.Set;
-        set.Connect(data.ClipNode, ConfigurableClipNode.KernelPorts.Output, entityNode);
+        // set.Connect(data.ClipNode, ClipPlayerNode.KernelPorts.Output, entityNode);
+        //
+        // set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Rig, rig);
+        // set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
+        // set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
+        // // set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Time, setup.ClipTime);
 
-        set.SendMessage(data.ClipNode, ConfigurableClipNode.SimulationPorts.Rig, rig);
-        set.SendMessage(data.ClipNode, ConfigurableClipNode.SimulationPorts.Clip, setup.Clip);
-        set.SetData(data.ClipNode, ConfigurableClipNode.KernelPorts.Time, setup.ClipTime);
+        // Connect kernel ports
+        set.Connect(entityNode, deltaTimeNode, ConvertDeltaTimeToFloatNode.KernelPorts.Input);
+        set.Connect(deltaTimeNode, ConvertDeltaTimeToFloatNode.KernelPorts.Output, data.ClipNode, ClipPlayerNode.KernelPorts.DeltaTime);
+        set.Connect(data.ClipNode, ClipPlayerNode.KernelPorts.Output, entityNode, NodeSetAPI.ConnectionType.Feedback);
+
+        // Send messages to set parameters on the ClipPlayerNode
+        set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
+        set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration { Mask = ClipConfigurationMask.LoopTime });
+        set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Rig, rig);
+        set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
 
         return data;
     }
@@ -124,9 +137,9 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         Entities
         // .WithName("ModifyConfigurableClipSetup")
         // .WithoutBurst()
-            .ForEach((Entity e, ref PlayClipStateComponent state, ref ConfigurableClipData animation) =>
+            .ForEach((Entity e, ref ConfigurableClipData data, ref ConfigurableClipSetup setup) =>
         {
-            // m_GraphSystem.Set.SendMessage(state.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Clip, animation.Clip);
+            m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
         });
     }
 }
