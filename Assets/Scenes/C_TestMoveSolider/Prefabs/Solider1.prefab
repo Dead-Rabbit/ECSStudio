@@ -1065,8 +1065,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7170064067731267980}
   - component: {fileID: 1239087496}
-  - component: {fileID: 1239087495}
-  - component: {fileID: 1239087494}
+  - component: {fileID: 8565381990659379027}
+  - component: {fileID: 1239087443}
   m_Layer: 0
   m_Name: Solider1
   m_TagString: Untagged
@@ -1104,8 +1104,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Version: 1
   Bones:
-  - {fileID: 7170064067731267980}
-  - {fileID: 7170132936194195710}
   - {fileID: 7178533497750381248}
   - {fileID: 7178448177277801118}
   - {fileID: 7169998661839695974}
@@ -1157,26 +1155,13 @@ MonoBehaviour:
   - {fileID: 7178229865526265202}
   m_ExcludeBones: []
   m_InvalidBones: []
-  m_SkeletonRootBone: {fileID: 0}
+  m_SkeletonRootBone: {fileID: 7178533497750381248}
   TranslationChannels: []
   RotationChannels: []
   ScaleChannels: []
   FloatChannels: []
   IntChannels: []
---- !u!114 &1239087495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7175898973708775856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConversionMode: 0
---- !u!114 &1239087494
+--- !u!114 &8565381990659379027
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1191,6 +1176,19 @@ MonoBehaviour:
   Clip1: {fileID: -203655887218126122, guid: 7640b71032e78bf40b2973aa7a3674bd, type: 3}
   Clip2: {fileID: -203655887218126122, guid: cb592d60da36d9944b378954b7cd521f, type: 3}
   input: {fileID: 0}
+--- !u!114 &1239087443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7175898973708775856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConversionMode: 0
 --- !u!1 &7175913775997619560
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,7 +1462,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7176331608328360144}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -21.956589, y: -79.1732, z: -19.133595}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []

@@ -519,58 +519,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &641906693
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 641906695}
-  - component: {fileID: 641906694}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &641906694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641906693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45a335734b1572644a6a5d09d87adc65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _SceneAsset: {fileID: 102900000, guid: e355bb9ac56573847a88cbdae9a0c139, type: 3}
-  _HierarchyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  AutoLoadScene: 1
-  _SceneGUID:
-    Value:
-      x: 2847626558
-      y: 1211586140
-      z: 2914814119
-      w: 2468088478
---- !u!4 &641906695
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641906693}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &864471527
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,10 +592,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1239087494, guid: 641a38a607186cd44a33acbbe2a5ce58, type: 3}
-      propertyPath: input
-      value: 
-      objectReference: {fileID: 1765944921}
     - target: {fileID: 7170064067731267980, guid: 641a38a607186cd44a33acbbe2a5ce58,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -686,7 +630,7 @@ PrefabInstance:
     - target: {fileID: 7170064067731267980, guid: 641a38a607186cd44a33acbbe2a5ce58,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7170064067731267980, guid: 641a38a607186cd44a33acbbe2a5ce58,
         type: 3}
@@ -708,6 +652,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Solider1
       objectReference: {fileID: 0}
+    - target: {fileID: 8565381990659379027, guid: 641a38a607186cd44a33acbbe2a5ce58,
+        type: 3}
+      propertyPath: input
+      value: 
+      objectReference: {fileID: 1765944921}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 641a38a607186cd44a33acbbe2a5ce58, type: 3}
 --- !u!1 &1297650280
@@ -930,7 +879,7 @@ PrefabInstance:
     - target: {fileID: 3965685608614050066, guid: f4c00ce737751a041b04ceea7ceabf18,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3965685608614339890, guid: f4c00ce737751a041b04ceea7ceabf18,
         type: 3}
