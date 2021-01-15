@@ -34,22 +34,36 @@ public abstract class AnimationInputBase<T> : AnimationInputBase
     {
         if (m_RigEntities?.Count > 0)
         {
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
             // Select next rig entity
             if (Input.GetKeyDown(KeyCode.N))
             {
                 m_ActiveEntityIndex = (m_ActiveEntityIndex + 1) % m_RigEntities.Count;
             }
 
-            var currentEntity = m_RigEntities[m_ActiveEntityIndex];
-            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            if (!entityManager.HasComponent<T>(currentEntity))
-                return;
-
-            var data = entityManager.GetComponentData<T>(currentEntity);
-            if (UpdateComponentData(ref data))
+            for (var i = 0; i < m_RigEntities.Count; i++)
             {
-                entityManager.SetComponentData(currentEntity, data);
+                var currentEntity = m_RigEntities[i];
+                if (!entityManager.HasComponent<T>(currentEntity))
+                    continue;
+
+                var data = entityManager.GetComponentData<T>(currentEntity);
+                if (UpdateComponentData(ref data))
+                {
+                    entityManager.SetComponentData(currentEntity, data);
+                }
             }
+
+            // var currentEntity = m_RigEntities[m_ActiveEntityIndex];
+            // if (!entityManager.HasComponent<T>(currentEntity))
+            //     return;
+            //
+            // var data = entityManager.GetComponentData<T>(currentEntity);
+            // if (UpdateComponentData(ref data))
+            // {
+            //     entityManager.SetComponentData(currentEntity, data);
+            // }
         }
     }
 
