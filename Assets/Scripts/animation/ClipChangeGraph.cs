@@ -108,28 +108,13 @@ public class ClipChangeGraphSystem : SampleSystemBase<
     protected override void OnUpdate()
     {
         base.OnUpdate();
-
-        // Performed on main thread since sending messages from NodeSet and ClipConfiguration changes incur a structural graph change.
-        // It's not recommended to do this at runtime, it's mostly shown here to showcase clip configuration features.
-        // Entities.WithAll<ConfigurableClipSetup, ConfigurableClipData>()
-        //     .ForEach((Entity e, ref ConfigurableClipData data) =>
-        //     {
-        // m_AnimationSystem.Set.SetData(data.ConfigurableClipNode, ConfigurableClipNode.KernelPorts.Time, data.ClipTime);
-        // if (data.UpdateConfiguration)
-        // {
-        //     var config = new ClipConfiguration { Mask = data.ClipOptions, MotionID = data.InPlace ? data.MotionID : 0 };
-        //     m_AnimationSystem.Set.SendMessage(data.ConfigurableClipNode, ConfigurableClipNode.SimulationPorts.Configuration, config);
-        //     data.UpdateConfiguration = false;
-        // }
-        // });
-
-
         Entities
-            .WithAll<ChangeClipPlayerData, InputChangeClipSampleData>()
+            .WithAll<InputChangeClipSampleData>()
             .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input) =>
             {
                 if (input.ifModify)
                 {
+                    Debug.Log("Change Entity ? " + e);
                     DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
                     input.ifModify = false;
                     m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);

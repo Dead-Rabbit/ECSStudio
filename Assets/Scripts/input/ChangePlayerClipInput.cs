@@ -1,7 +1,8 @@
 using System;
+using Unity.Entities;
 using UnityEngine;
 
-public class A_TestChangePlayerClipInput : AnimationInputBase<InputChangeClipSampleData>
+public class ChangePlayerClipInput : AnimationInputBase<InputChangeClipSampleData>
 {
     private Int32 index;
 
@@ -23,7 +24,6 @@ public class A_TestChangePlayerClipInput : AnimationInputBase<InputChangeClipSam
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Debug.Log("Modify C " + m_ActiveEntityIndex);
             index = (index + 1) % 2;
         }
     }
