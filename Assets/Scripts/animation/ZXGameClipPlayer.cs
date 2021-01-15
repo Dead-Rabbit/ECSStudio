@@ -13,17 +13,17 @@ public class ZXGameClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
     public AnimationClip Clip2;
 
     // 此处使用Unity中的
-    public InputChangeClip input;
+    // public InputChangeClip input;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         if (Clip1 == null || Clip2 == null)
             return;
 
-        if (null != input)
-        {
-            input.RegisterEntity(entity);
-        }
+        // if (null != input)
+        // {
+        //     input.RegisterEntity(entity);
+        // }
 
         conversionSystem.DeclareAssetDependency(gameObject, Clip1);
         conversionSystem.DeclareAssetDependency(gameObject, Clip2);
@@ -36,22 +36,22 @@ public class ZXGameClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
         {
             Clip = conversionSystem.BlobAssetStore.GetClip(Clip1)
         });
-        dstManager.AddComponentData(entity, new ChangeClipSampleData
-        {
-            ifModify = false,
-            index = 0
-        });
+        // dstManager.AddComponentData(entity, new ChangeClipSampleData
+        // {
+        //     ifModify = false,
+        //     index = 0
+        // });
 
         dstManager.AddComponent<DeltaTime>(entity);
     }
 }
 #endif
-
-public struct ChangeClipSampleData : ISampleData
-{
-    public bool ifModify;
-    public int index;
-}
+//
+// public struct ChangeClipSampleData : ISampleData
+// {
+//     public bool ifModify;
+//     public int index;
+// }
 
 public struct PlayClipComponent : IComponentData
 {
@@ -191,16 +191,16 @@ public class InputAndChangeClipComponentSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        Entities
-            .WithChangeFilter<ChangeClipSampleData>()
-            .ForEach((Entity e, ref ChangeClipSampleData input, ref PlayClipComponent clipComponent, in DynamicBuffer<SampleClip> buffer) =>
-            {
-                Debug.Log("Modify And Update");
-                if (input.ifModify)
-                {
-                    clipComponent.Clip = buffer[input.index].Clip;
-                    input.ifModify = false;
-                }
-            }).Run();
+        // Entities
+        //     .WithChangeFilter<ChangeClipSampleData>()
+        //     .ForEach((Entity e, ref ChangeClipSampleData input, ref PlayClipComponent clipComponent, in DynamicBuffer<SampleClip> buffer) =>
+        //     {
+        //         Debug.Log("Modify And Update");
+        //         if (input.ifModify)
+        //         {
+        //             clipComponent.Clip = buffer[input.index].Clip;
+        //             input.ifModify = false;
+        //         }
+        //     }).Run();
     }
 }

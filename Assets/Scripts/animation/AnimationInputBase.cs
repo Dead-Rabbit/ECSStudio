@@ -15,8 +15,6 @@ public abstract class AnimationInputBase : MonoBehaviour
             m_RigEntities = new List<Entity>();
         }
 
-        Debug.Log("Register = " + entity);
-
         m_RigEntities.Add(entity);
     }
 }

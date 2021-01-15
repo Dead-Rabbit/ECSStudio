@@ -17,22 +17,6 @@ public class ClipChangeGraph : AnimationGraphBase
 
     private StringHash m_MotionId;
 
-    // public override void PreProcessData<T>(T data)
-    // {
-    // if (data is RigComponent)
-    // {
-    //     var rig = data as RigComponent;
-    //
-    //     for (var boneIter = 0; boneIter < rig.Bones.Length; boneIter++)
-    //     {
-    //         if (MotionName == rig.Bones[boneIter].name)
-    //         {
-    //             m_MotionId = RigGenerator.ComputeRelativePath(rig.Bones[boneIter], rig.transform);
-    //         }
-    //     }
-    // }
-    // }
-
     public override void AddGraphSetupComponent(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         var graphSetup = new ChangeClipSetup
@@ -60,6 +44,12 @@ public struct StoreClipBuffer : IBufferElementData
     public BlobAssetReference<Clip> Clip;
 }
 
+public struct InputChangeClipSampleData : ISampleData
+{
+    public bool ifModify;
+    public int index;
+}
+
 public struct ChangeClipSetup : ISampleSetup
 {
     public BlobAssetReference<Clip> Clip;
@@ -71,14 +61,6 @@ public struct ChangeClipPlayerData : ISampleData
 {
     public GraphHandle Graph;
     public NodeHandle<ClipPlayerNode> ClipNode;
-
-    // public float ClipTime;
-    //
-    // public bool UpdateConfiguration;
-    // public bool InPlace;
-    //
-    // public ClipConfigurationMask ClipOptions;
-    // public StringHash MotionID;
 }
 
 [UpdateBefore(typeof(DefaultAnimationSystemGroup))]
@@ -141,10 +123,17 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         // }
         // });
 
-        // Entities
-        //     .ForEach((Entity e, ref ChangeClipPlayerData data, ref ChangeClipSetup setup) =>
-        // {
-        //     m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
-        // });
+
+        Entities
+            .WithAll<ChangeClipPlayerData, InputChangeClipSampleData>()
+            .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input) =>
+            {
+                if (input.ifModify)
+                {
+                    DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
+                    input.ifModify = false;
+                    m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
+                }
+            });
     }
 }

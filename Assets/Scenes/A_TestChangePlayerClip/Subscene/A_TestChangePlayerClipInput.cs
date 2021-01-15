@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-public class A_TestChangePlayerClipInput : AnimationInputBase<ChangeClipSampleData>
+public class A_TestChangePlayerClipInput : AnimationInputBase<InputChangeClipSampleData>
 {
     private Int32 index;
 
-    protected override bool UpdateComponentData(ref ChangeClipSampleData data)
+    protected override bool UpdateComponentData(ref InputChangeClipSampleData data)
     {
         UpdateParameters();
         UpdateText();
@@ -23,6 +23,7 @@ public class A_TestChangePlayerClipInput : AnimationInputBase<ChangeClipSampleDa
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
+            Debug.Log("Modify C");
             index = (index + 1) % 2;
         }
     }

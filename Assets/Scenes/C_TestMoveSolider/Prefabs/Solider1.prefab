@@ -1065,7 +1065,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7170064067731267980}
   - component: {fileID: 1239087496}
-  - component: {fileID: 8565381990659379027}
   - component: {fileID: 1239087443}
   m_Layer: 0
   m_Name: Solider1
@@ -1161,21 +1160,6 @@ MonoBehaviour:
   ScaleChannels: []
   FloatChannels: []
   IntChannels: []
---- !u!114 &8565381990659379027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7175898973708775856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9fd85f3e2ad1e945ba6bca9bb608f95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Clip1: {fileID: -203655887218126122, guid: 7640b71032e78bf40b2973aa7a3674bd, type: 3}
-  Clip2: {fileID: -203655887218126122, guid: cb592d60da36d9944b378954b7cd521f, type: 3}
-  input: {fileID: 0}
 --- !u!114 &1239087443
 MonoBehaviour:
   m_ObjectHideFlags: 0
