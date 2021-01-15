@@ -22,7 +22,7 @@ public abstract class AnimationInputBase : MonoBehaviour
 public abstract class AnimationInputBase<T> : AnimationInputBase
     where T : struct, ISampleData
 {
-    int m_ActiveEntityIndex;
+    public int m_ActiveEntityIndex;
 
     void Awake()
     {

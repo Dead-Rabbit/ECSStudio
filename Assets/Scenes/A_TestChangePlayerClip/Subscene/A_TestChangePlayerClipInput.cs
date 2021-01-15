@@ -23,7 +23,7 @@ public class A_TestChangePlayerClipInput : AnimationInputBase<InputChangeClipSam
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Debug.Log("Modify C");
+            Debug.Log("Modify C " + m_ActiveEntityIndex);
             index = (index + 1) % 2;
         }
     }
