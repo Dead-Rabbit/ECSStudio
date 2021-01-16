@@ -113,7 +113,7 @@ public class ClipChangeGraphSystem : SampleSystemBase<
             {
                 if (input.ifModify)
                 {
-                    Debug.Log("=======>");
+                    Debug.Log("=======>" + Time.DeltaTime);
                     Debug.Log("Update Entity Entity " + e);
                     Debug.Log("Update Entity input " + input.ifModify);
                     DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
