@@ -61,7 +61,7 @@ public abstract class SampleSystemBase<TSampleSetup, TSampleData, TAnimationSyst
 
     protected override void OnUpdate()
     {
-        Debug.Log("Update =======>" + Time.DeltaTime);
+        // Debug.Log("Update =======>" + Time.DeltaTime);
 
         // Create graph
         Entities.WithNone<TSampleData>().ForEach(m_CreateLambda);

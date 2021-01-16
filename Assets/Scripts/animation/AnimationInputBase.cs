@@ -8,7 +8,7 @@ public abstract class AnimationInputBase : MonoBehaviour
 
     public abstract Entity ActiveEntity { get; }
 
-    public void RegisterEntity(Entity entity)
+    public virtual void RegisterEntity(Entity entity)
     {
         if (m_RigEntities == null)
         {
@@ -24,10 +24,20 @@ public abstract class AnimationInputBase<T> : AnimationInputBase
 {
     [HideInInspector] public int m_ActiveEntityIndex;
 
+    private RigSpawnerSystem spawnerSystem;
+
     void Awake()
     {
-        var spawnerSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<RigSpawnerSystem>();
+        spawnerSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<RigSpawnerSystem>();
         spawnerSystem.RegisterInput(this);
+    }
+
+    // 自定义追加控制Data
+    public override void RegisterEntity(Entity entity)
+    {
+        base.RegisterEntity(entity);
+        spawnerSystem.EntityManager.AddComponent<T>(entity);
+        Debug.Log(entity + " Add Component " + typeof(T));
     }
 
     void Update()
