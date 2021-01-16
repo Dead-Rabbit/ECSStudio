@@ -83,6 +83,7 @@ public class RigSpawnerSystem : SystemBase
                         // Debug.Log("Add One");
                         var rigInstance = EntityManager.Instantiate(spawner.RigPrefab);
                         var translation = new float3(x * 1.3F, 0, y * 1.3F);
+                        Debug.Log("Create New Translation " + translation);
                         EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
 
                         if (m_Input != null)

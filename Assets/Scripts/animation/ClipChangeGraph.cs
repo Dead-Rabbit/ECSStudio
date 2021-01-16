@@ -48,7 +48,6 @@ public class ClipChangeGraph : AnimationGraphBase
         for (int i = 0; i < Clips.Length; ++i)
             clipBuffer.Add(new StoreClipBuffer { Clip = Clips[i].ToDenseClip() });
 
-        dstManager.AddComponent<ProcessDefaultAnimationGraph.AnimatedRootMotion>(entity);
         dstManager.AddComponentData(entity, graphSetup);
         dstManager.AddComponent<DeltaTime>(entity);
     }
@@ -114,10 +113,11 @@ public class ClipChangeGraphSystem : SampleSystemBase<
 
         // Send messages to set parameters on the ClipPlayerNode
         set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
-        Debug.Log("Add Motion On Entity " + entity + " ");
+        Debug.Log("Add Motion On Entity " + entity + " - " + data.MotionID);
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration
         {
-            Mask = ClipConfigurationMask.LoopTime | ClipConfigurationMask.CycleRootMotion,
+            Mask = ClipConfigurationMask.LoopTime
+                | ClipConfigurationMask.CycleRootMotion,
             // Mask = ClipConfigurationMask.NormalizedTime | ClipConfigurationMask.LoopTime | ClipConfigurationMask.RootMotionFromVelocity,
             MotionID = data.MotionID
         });
