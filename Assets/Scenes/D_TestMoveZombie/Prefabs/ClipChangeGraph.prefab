@@ -46,4 +46,5 @@ MonoBehaviour:
   Clip: {fileID: -203655887218126122, guid: 5375b526366ca7641bf8110eb906e2e9, type: 3}
   Clips:
   - {fileID: -203655887218126122, guid: 5375b526366ca7641bf8110eb906e2e9, type: 3}
+  MotionName: Hips
   ClipTimeInit: 0

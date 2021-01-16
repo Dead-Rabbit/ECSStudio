@@ -34,7 +34,7 @@ public class ZXGameClipPlayer : MonoBehaviour, IConvertGameObjectToEntity
 
         dstManager.AddComponentData(entity, new PlayClipComponent
         {
-            Clip = conversionSystem.BlobAssetStore.GetClip(Clip1)
+            Clip = conversionSystem.BlobAssetStore.GetClip(Clip1),
         });
         // dstManager.AddComponentData(entity, new ChangeClipSampleData
         // {
@@ -167,7 +167,10 @@ public class ZXGamePlayClipSystem : SystemBase
 
         // Send messages to set parameters on the ClipPlayerNode
         set.SetData(data.ClipPlayerNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
-        set.SendMessage(data.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration { Mask = ClipConfigurationMask.LoopTime });
+        set.SendMessage(data.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration
+        {
+            Mask = ClipConfigurationMask.LoopTime | ClipConfigurationMask.CycleRootMotion
+        });
         set.SendMessage(data.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Rig, rig);
         set.SendMessage(data.ClipPlayerNode, ClipPlayerNode.SimulationPorts.Clip, playClip.Clip);
 

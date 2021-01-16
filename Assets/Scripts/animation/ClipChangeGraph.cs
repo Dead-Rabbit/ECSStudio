@@ -12,9 +12,27 @@ public class ClipChangeGraph : AnimationGraphBase
 
     public AnimationClip[] Clips;
 
+    public string MotionName;
+
     public float ClipTimeInit;
 
     private StringHash m_MotionId;
+
+    public override void PreProcessData<T>(T data)
+    {
+        if (data is RigComponent)
+        {
+            var rig = data as RigComponent;
+
+            for (var boneIter = 0; boneIter < rig.Bones.Length; boneIter++)
+            {
+                if (MotionName == rig.Bones[boneIter].name)
+                {
+                    m_MotionId = RigGenerator.ComputeRelativePath(rig.Bones[boneIter], rig.transform);
+                }
+            }
+        }
+    }
 
     public override void AddGraphSetupComponent(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -60,6 +78,7 @@ public struct ChangeClipPlayerData : ISampleData
 {
     public GraphHandle Graph;
     public NodeHandle<ClipPlayerNode> ClipNode;
+    public StringHash MotionID;
 }
 
 [UpdateBefore(typeof(DefaultAnimationSystemGroup))]
@@ -79,6 +98,7 @@ public class ClipChangeGraphSystem : SampleSystemBase<
 
         data.Graph = graphSystem.CreateGraph();
         data.ClipNode = graphSystem.CreateNode<ClipPlayerNode>(data.Graph);
+        data.MotionID = setup.MotionID;
 
         var deltaTimeNode = graphSystem.CreateNode<ConvertDeltaTimeToFloatNode>(data.Graph);
         var entityNode = graphSystem.CreateNode(data.Graph, entity);
@@ -92,7 +112,12 @@ public class ClipChangeGraphSystem : SampleSystemBase<
 
         // Send messages to set parameters on the ClipPlayerNode
         set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
-        set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration { Mask = ClipConfigurationMask.LoopTime });
+        set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration
+        {
+            Mask = ClipConfigurationMask.LoopTime | ClipConfigurationMask.CycleRootMotion,
+            MotionID = data.MotionID
+        });
+
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Rig, rig);
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, setup.Clip);
 
@@ -107,16 +132,16 @@ public class ClipChangeGraphSystem : SampleSystemBase<
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        Entities
-            .WithAll<InputChangeClipSampleData>()
-            .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input) =>
-            {
-                if (input.ifModify)
-                {
-                    DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
-                    m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
-                }
-                input.ifModify = false;
-            });
+        // Entities
+        //     .WithAll<InputChangeClipSampleData>()
+        //     .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input) =>
+        //     {
+        //         if (input.ifModify)
+        //         {
+        //             DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
+        //             m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
+        //         }
+        //         input.ifModify = false;
+        //     });
     }
 }
