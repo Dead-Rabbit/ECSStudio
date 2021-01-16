@@ -12,7 +12,6 @@ public class ClipChangeGraph : AnimationGraphBase
 
     public AnimationClip[] Clips;
 
-    public string MotionName;
     public float ClipTimeInit;
 
     private StringHash m_MotionId;
