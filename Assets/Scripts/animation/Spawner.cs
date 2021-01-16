@@ -86,6 +86,8 @@ public class RigSpawnerSystem : SystemBase
                         Debug.Log("Create New Translation " + translation);
                         EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
 
+                        // 此处增加rig和对应的motion_id
+
                         if (m_Input != null)
                             m_Input.RegisterEntity(rigInstance);
                     }
