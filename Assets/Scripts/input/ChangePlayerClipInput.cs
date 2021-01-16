@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChangePlayerClipInput : AnimationInputBase<InputChangeClipSampleData>
 {
-    private List<int> animationIndex = new List<int>();
+    private readonly List<int> animationIndex = new List<int>();
 
     public override void RegisterEntity(Entity entity)
     {
