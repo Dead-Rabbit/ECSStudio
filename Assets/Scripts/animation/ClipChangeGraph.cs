@@ -114,11 +114,13 @@ public class ClipChangeGraphSystem : SampleSystemBase<
             {
                 if (input.ifModify)
                 {
-                    Debug.Log("Change Entity ? " + e);
+                    Debug.Log("=======>");
+                    Debug.Log("Update Entity Entity " + e);
+                    Debug.Log("Update Entity input " + input.ifModify);
                     DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
-                    input.ifModify = false;
                     m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
                 }
+                input.ifModify = false;
             });
     }
 }
