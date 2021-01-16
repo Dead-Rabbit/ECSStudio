@@ -63,16 +63,6 @@ public abstract class AnimationInputBase<T> : AnimationInputBase
                     entityManager.SetComponentData(currentEntity, data);
                 }
             }
-
-            // var currentEntity = m_RigEntities[m_ActiveEntityIndex];
-            // if (!entityManager.HasComponent<T>(currentEntity))
-            //     return;
-            //
-            // var data = entityManager.GetComponentData<T>(currentEntity);
-            // if (UpdateComponentData(ref data))
-            // {
-            //     entityManager.SetComponentData(currentEntity, data);
-            // }
         }
     }
 

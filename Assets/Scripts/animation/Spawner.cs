@@ -84,8 +84,6 @@ public class RigSpawnerSystem : SystemBase
                         var translation = new float3(x * 1.3F, 0, y * 1.3F);
                         EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
 
-                        // EntityManager.AddComponent<InputChangeClipSampleData>(rigInstance);
-
                         if (m_Input != null)
                             m_Input.RegisterEntity(rigInstance);
                     }

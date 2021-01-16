@@ -19,7 +19,6 @@ public class ChangePlayerClipInput : AnimationInputBase<InputChangeClipSampleDat
         UpdateText();
         if (data.index != animationIndex[index])
         {
-            Debug.Log("Modify Entity: " + entity);
             data.ifModify = true;
             data.index = animationIndex[index];
             return true;
