@@ -1,30 +1,39 @@
 using System;
+using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
 public class ChangePlayerClipInput : AnimationInputBase<InputChangeClipSampleData>
 {
-    private Int32 index;
+    private List<int> animationIndex = new List<int>();
 
-    protected override bool UpdateComponentData(ref InputChangeClipSampleData data)
+    public override void RegisterEntity(Entity entity)
     {
-        UpdateParameters();
+        base.RegisterEntity(entity);
+        animationIndex.Add(0);
+    }
+
+    protected override bool UpdateComponentData(ref InputChangeClipSampleData data, int index, Entity entity)
+    {
+        UpdateParameters(index);
         UpdateText();
-        if (data.index != index)
+        if (data.index != animationIndex[index])
         {
+            Debug.Log("Modify Entity: " + entity);
             data.ifModify = true;
-            data.index = index;
+            data.index = animationIndex[index];
             return true;
         }
 
         return false;
     }
 
-    private void UpdateParameters()
+    private void UpdateParameters(int index)
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            index = (index + 1) % 2;
+            // 此处的2为定制的动画的总数，目前为2个，考虑如何将2设置到对应的Buff中
+            animationIndex[index] = (animationIndex[index] + 1) % 2;
         }
     }
 

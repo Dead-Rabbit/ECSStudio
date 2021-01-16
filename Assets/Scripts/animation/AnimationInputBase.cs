@@ -37,7 +37,6 @@ public abstract class AnimationInputBase<T> : AnimationInputBase
     {
         base.RegisterEntity(entity);
         spawnerSystem.EntityManager.AddComponent<T>(entity);
-        Debug.Log(entity + " Add Component " + typeof(T));
     }
 
     void Update()
@@ -59,7 +58,7 @@ public abstract class AnimationInputBase<T> : AnimationInputBase
                     continue;
 
                 var data = entityManager.GetComponentData<T>(currentEntity);
-                if (UpdateComponentData(ref data))
+                if (UpdateComponentData(ref data, i, currentEntity))
                 {
                     entityManager.SetComponentData(currentEntity, data);
                 }
@@ -80,5 +79,5 @@ public abstract class AnimationInputBase<T> : AnimationInputBase
     public override Entity ActiveEntity =>
         (m_RigEntities?.Count > 0) ? m_RigEntities[m_ActiveEntityIndex] : Entity.Null;
 
-    protected abstract bool UpdateComponentData(ref T data);
+    protected abstract bool UpdateComponentData(ref T data, int index, Entity entity);
 }

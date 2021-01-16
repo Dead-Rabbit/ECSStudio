@@ -122,31 +122,3 @@ public class ClipChangeGraphSystem : SampleSystemBase<
             });
     }
 }
-
-// [UpdateBefore(typeof(DefaultAnimationSystemGroup))]
-// public class AnimationControllerApplyState : SystemBase
-// {
-//     public ProcessDefaultAnimationGraph animationSystem;
-//     protected override void OnCreate()
-//     {
-//         base.OnCreate();
-//         animationSystem = World.GetOrCreateSystem<ProcessDefaultAnimationGraph>();
-//     }
-//
-//     protected override void OnUpdate()
-//     {
-//         Dependency = Entities
-//             .ForEach((Entity entity, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input) =>
-//         {
-//             if (input.ifModify)
-//             {
-//                 Debug.Log("=======>");
-//                 Debug.Log("Update Entity input " + entity);
-//                 Debug.Log("Update Entity input " + input.ifModify);
-//                 // DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
-//                 // m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
-//             }
-//             input.ifModify = false;
-//         }).ScheduleParallel(Dependency);
-//     }
-// }
