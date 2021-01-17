@@ -18,7 +18,7 @@ public class ClipChangeGraph : AnimationGraphBase
 
     private StringHash m_MotionId;
 
-    // 此处的PreProcessData仅执行一次，给Spawner Entity 增加了一次Conponent
+    // 此处的PreProcessData仅执行一次，给Spawner Entity 增加了一次 Component
     public override void PreProcessData<T>(T data)
     {
         if (data is RigComponent)
