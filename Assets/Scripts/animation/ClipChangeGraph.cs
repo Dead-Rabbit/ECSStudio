@@ -30,7 +30,6 @@ public class ClipChangeGraph : AnimationGraphBase
                 if (MotionName == rig.Bones[boneIter].name)
                 {
                     m_MotionId = RigGenerator.ComputeRelativePath(rig.Bones[boneIter], rig.transform);
-                    Debug.Log("Generate New Motion ID " + m_MotionId);
                 }
             }
         }
@@ -115,12 +114,10 @@ public class ClipChangeGraphSystem : SampleSystemBase<
 
         // Send messages to set parameters on the ClipPlayerNode
         set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
-        Debug.Log("Add Motion On Entity " + entity + " - " + data.MotionID);
 
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Rig, rig);
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration
         {
-            // Mask = ClipConfigurationMask.LoopTime | ClipConfigurationMask.CycleRootMotion,
             Mask = ClipConfigurationMask.LoopTime | ClipConfigurationMask.CycleRootMotion | ClipConfigurationMask.DeltaRootMotion,
             MotionID = data.MotionID
         });
