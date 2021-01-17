@@ -4,7 +4,8 @@ using Unity.Transforms;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-
+using Unity.Animation;
+using Debug = UnityEngine.Debug;
 #if UNITY_EDITOR
 using Unity.Animation.Hybrid;
 
@@ -80,13 +81,11 @@ public class RigSpawnerSystem : SystemBase
                 {
                     for (var y = 0; y < spawner.CountY; ++y)
                     {
-                        // Debug.Log("Add One");
                         var rigInstance = EntityManager.Instantiate(spawner.RigPrefab);
                         var translation = new float3(x * 1.3F, 0, y * 1.3F);
+
                         Debug.Log("Create New Translation " + translation);
                         EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
-
-                        // 此处增加rig和对应的motion_id
 
                         if (m_Input != null)
                             m_Input.RegisterEntity(rigInstance);
