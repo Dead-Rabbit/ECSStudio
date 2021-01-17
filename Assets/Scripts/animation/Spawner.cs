@@ -17,6 +17,8 @@ public class Spawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObj
     public int CountX = 100;
     public int CountY = 100;
 
+    public Vector2 startPosition;
+
     public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
     {
         referencedPrefabs.Add(RigPrefab);
@@ -46,6 +48,7 @@ public class Spawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObj
             RigPrefab = rigPrefab,
             CountX = CountX,
             CountY = CountY,
+            startPosition = new float3(startPosition.x, 0, startPosition.y),
         });
     }
 }
@@ -56,6 +59,7 @@ public struct RigSpawner : IComponentData
     public Entity RigPrefab;
     public int CountX;
     public int CountY;
+    public float3 startPosition;
 }
 
 [UpdateInGroup(typeof(InitializationSystemGroup))]

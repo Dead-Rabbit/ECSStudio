@@ -2,8 +2,9 @@ using Unity.Entities;
 using Unity.Animation;
 using Unity.DataFlowGraph;
 using Debug = UnityEngine.Debug;
-// #if UNITY_EDITOR
 using Unity.Animation.Hybrid;
+using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 public class ClipChangeGraph : AnimationGraphBase
@@ -53,7 +54,6 @@ public class ClipChangeGraph : AnimationGraphBase
         dstManager.AddComponent<DeltaTime>(entity);
     }
 }
-// #endif
 
 /**
  * 记录当前Spawner中的所有动画Clip
@@ -134,15 +134,22 @@ public class ClipChangeGraphSystem : SampleSystemBase<
 
     protected override void OnUpdate()
     {
+        var DeltaTime = Time.DeltaTime;
+
         base.OnUpdate();
         Entities
             .WithAll<InputChangeClipSampleData>()
-            .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input) =>
+            .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input, ref Rotation rotation) =>
             {
+                rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
+
                 if (input.ifModify)
                 {
-                    DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
-                    m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
+                    // DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
+                    // m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
+                    Debug.Log("rotation.Value = " + rotation.Value);
+                    // rotation.Value = new float3(0, rotation.Value.y + 10, 0);
+                    // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
                 }
                 input.ifModify = false;
             });
