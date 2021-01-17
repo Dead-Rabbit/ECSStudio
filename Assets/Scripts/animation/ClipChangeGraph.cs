@@ -2,7 +2,7 @@ using Unity.Entities;
 using Unity.Animation;
 using Unity.DataFlowGraph;
 using Debug = UnityEngine.Debug;
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
 using Unity.Animation.Hybrid;
 using UnityEngine;
 
@@ -54,7 +54,7 @@ public class ClipChangeGraph : AnimationGraphBase
         dstManager.AddComponent<DeltaTime>(entity);
     }
 }
-#endif
+// #endif
 
 /**
  * 记录当前Spawner中的所有动画Clip
