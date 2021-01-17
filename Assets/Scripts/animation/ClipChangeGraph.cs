@@ -135,16 +135,16 @@ public class ClipChangeGraphSystem : SampleSystemBase<
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        // Entities
-        //     .WithAll<InputChangeClipSampleData>()
-        //     .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input) =>
-        //     {
-        //         if (input.ifModify)
-        //         {
-        //             DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
-        //             m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
-        //         }
-        //         input.ifModify = false;
-        //     });
+        Entities
+            .WithAll<InputChangeClipSampleData>()
+            .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input) =>
+            {
+                if (input.ifModify)
+                {
+                    DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
+                    m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
+                }
+                input.ifModify = false;
+            });
     }
 }
