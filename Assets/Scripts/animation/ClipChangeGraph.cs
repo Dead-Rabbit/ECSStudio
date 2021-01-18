@@ -11,10 +11,10 @@ public class ClipChangeGraph : AnimationGraphBase
     public AnimationClip Clip;
 
     public AnimationClip[] Clips;
+    public Vector3 clipDefaultRotateOffset;
+    public float clipPlaySpeed = 1f;
 
     public string MotionName;
-
-    public float ClipTimeInit;
 
     private StringHash m_MotionId;
 
@@ -40,17 +40,29 @@ public class ClipChangeGraph : AnimationGraphBase
         var graphSetup = new ChangeClipSetup
         {
             Clip = Clip.ToDenseClip(),
-            ClipTime = ClipTimeInit,
-            MotionID = m_MotionId
+            MotionID = m_MotionId,
+            playSpeed = clipPlaySpeed
         };
 
         var clipBuffer = dstManager.AddBuffer<StoreClipBuffer>(entity);
+
         for (int i = 0; i < Clips.Length; ++i)
-            clipBuffer.Add(new StoreClipBuffer { Clip = Clips[i].ToDenseClip() });
+        {
+            clipBuffer.Add(new StoreClipBuffer
+            {
+                Clip = Clips[i].ToDenseClip()
+            });
+        }
 
         dstManager.AddComponent<ProcessDefaultAnimationGraph.AnimatedRootMotion>(entity);
         dstManager.AddComponentData(entity, graphSetup);
         dstManager.AddComponent<DeltaTime>(entity);
+
+        // 测试开始时给一个角度（针对当前动画）
+        dstManager.SetComponentData(entity, new Rotation()
+        {
+            Value = Quaternion.Euler(clipDefaultRotateOffset)
+        });
     }
 }
 
@@ -71,8 +83,8 @@ public struct InputChangeClipSampleData : ISampleData
 public struct ChangeClipSetup : ISampleSetup
 {
     public BlobAssetReference<Clip> Clip;
-    public float ClipTime;
     public StringHash MotionID;
+    public float playSpeed;
 }
 
 public struct ChangeClipPlayerData : ISampleData
@@ -112,12 +124,13 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         set.Connect(data.ClipNode, ClipPlayerNode.KernelPorts.Output, entityNode, NodeSetAPI.ConnectionType.Feedback);
 
         // Send messages to set parameters on the ClipPlayerNode
-        set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, 1.0f);
+        set.SetData(data.ClipNode, ClipPlayerNode.KernelPorts.Speed, setup.playSpeed);
 
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Rig, rig);
         set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Configuration, new ClipConfiguration
         {
-            Mask = ClipConfigurationMask.LoopTime | ClipConfigurationMask.CycleRootMotion | ClipConfigurationMask.DeltaRootMotion,
+            // Mask = ClipConfigurationMask.LoopTime | ClipConfigurationMask.CycleRootMotion | ClipConfigurationMask.DeltaRootMotion,       // 可移动
+            Mask = ClipConfigurationMask.LoopTime | ClipConfigurationMask.CycleRootMotion | ClipConfigurationMask.DeltaRootMotion | ClipConfigurationMask.BankPivot,       // 可移动
             MotionID = data.MotionID
         });
 
@@ -133,24 +146,24 @@ public class ClipChangeGraphSystem : SampleSystemBase<
 
     protected override void OnUpdate()
     {
-        var DeltaTime = Time.DeltaTime;
-
         base.OnUpdate();
-        Entities
-            .WithAll<InputChangeClipSampleData>()
-            .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input, ref Rotation rotation) =>
-            {
-                // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
 
-                if (input.ifModify)
-                {
-                    // DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
-                    // m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
-                    // Debug.Log("rotation.Value = " + rotation.Value);
-                    // rotation.Value = new float3(0, rotation.Value.y + 10, 0);
-                    // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
-                }
-                input.ifModify = false;
-            });
+        // var DeltaTime = Time.DeltaTime;
+        // Entities
+        //     .WithAll<InputChangeClipSampleData>()
+        //     .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input, ref Rotation rotation) =>
+        //     {
+        //         // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
+        //
+        //         if (input.ifModify)
+        //         {
+        //             // DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
+        //             // m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
+        //             // Debug.Log("rotation.Value = " + rotation.Value);
+        //             // rotation.Value = new float3(0, rotation.Value.y + 10, 0);
+        //             // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
+        //         }
+        //         input.ifModify = false;
+        //     });
     }
 }

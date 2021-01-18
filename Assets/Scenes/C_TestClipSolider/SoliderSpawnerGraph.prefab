@@ -47,5 +47,6 @@ MonoBehaviour:
   Clips:
   - {fileID: -203655887218126122, guid: 7640b71032e78bf40b2973aa7a3674bd, type: 3}
   - {fileID: -203655887218126122, guid: cb592d60da36d9944b378954b7cd521f, type: 3}
+  clipDefaultRotateOffset: {x: 0, y: 0, z: 0}
+  clipPlaySpeed: 1
   MotionName: 
-  ClipTimeInit: 0
