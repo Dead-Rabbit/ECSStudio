@@ -36,7 +36,7 @@ namespace system
                 .WithAll<ZombieUnitType>()
                 .WithDisposeOnCompletion(soliderPos)
                 // .WithDeallocateOnJobCompletion(soliderPos)
-                .ForEach((Entity zombie, ref Rotation rotation, in Translation zombiePos) =>
+                .ForEach((ref Rotation rotation, in Translation zombiePos) =>
                 {
                     // playerPosition.y = enemyPos.Value.y;
                     //
@@ -46,15 +46,21 @@ namespace system
                     // }
                     // else
                     // {
-                    Debug.Log(rotation);
                     // 遍历寻找距离最近的Solider Index
+                    var minDis = float.MaxValue;
+                    var minPos = float3.zero;
                     for (int i = 0; i < soliderPos.Length; i++)
                     {
                         var distance = math.distancesq(soliderPos[i].Value, zombiePos.Value);
+                        if (distance < minDis)
+                        {
+                            minPos = soliderPos[i].Value;
+                        }
                         // Debug.Log(distance);
                     }
 
-                    Quaternion.RotateTowards(rotation.Value, Quaternion.identity, 10);
+                    Quaternion deltaQuaternion = Quaternion.RotateTowards(rotation.Value, Quaternion.identity, 10);
+                    rotation.Value = deltaQuaternion;
 
                     // }
                 }).ScheduleParallel(Dependency);
