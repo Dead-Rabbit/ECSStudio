@@ -141,13 +141,13 @@ public class ClipChangeGraphSystem : SampleSystemBase<
             .WithAll<InputChangeClipSampleData>()
             .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input, ref Rotation rotation) =>
             {
-                rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
+                // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
 
                 if (input.ifModify)
                 {
                     // DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
                     // m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
-                    Debug.Log("rotation.Value = " + rotation.Value);
+                    // Debug.Log("rotation.Value = " + rotation.Value);
                     // rotation.Value = new float3(0, rotation.Value.y + 10, 0);
                     // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
                 }
