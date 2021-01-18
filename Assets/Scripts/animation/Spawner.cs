@@ -4,9 +4,8 @@ using Unity.Transforms;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using Unity.Animation;
-using Debug = UnityEngine.Debug;
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
+using component.tags;
 using Unity.Animation.Hybrid;
 
 public class Spawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
@@ -18,6 +17,7 @@ public class Spawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObj
     public int CountY = 100;
 
     public Vector2 startPosition;
+    public UnitTags spawnerTag;
 
     public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
     {
@@ -49,10 +49,11 @@ public class Spawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObj
             CountX = CountX,
             CountY = CountY,
             startPosition = new float3(startPosition.x, 0, startPosition.y),
+            typeTag = spawnerTag,
         });
     }
 }
-#endif
+// #endif
 
 public struct RigSpawner : IComponentData
 {
@@ -60,6 +61,7 @@ public struct RigSpawner : IComponentData
     public int CountX;
     public int CountY;
     public float3 startPosition;
+    public UnitTags typeTag;
 }
 
 [UpdateInGroup(typeof(InitializationSystemGroup))]
@@ -86,9 +88,19 @@ public class RigSpawnerSystem : SystemBase
                     for (var y = 0; y < spawner.CountY; ++y)
                     {
                         var rigInstance = EntityManager.Instantiate(spawner.RigPrefab);
-                        var translation = new float3(x * 1.3F, 0, y * 1.3F);
+                        var translation = new float3(spawner.startPosition.x + x * 1.3F, spawner.startPosition.y, spawner.startPosition.z + y * 1.3F);
 
                         EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
+
+                        switch (spawner.typeTag)
+                        {
+                            case UnitTags.ZOMBIE:
+                                EntityManager.AddComponent<ZombieUnitType>(rigInstance);
+                                break;
+                            case UnitTags.SOLIDER:
+                                EntityManager.AddComponent<SoliderUnitType>(rigInstance);
+                                break;
+                        }
 
                         if (m_Input != null)
                             m_Input.RegisterEntity(rigInstance);
