@@ -26,27 +26,26 @@ namespace system
 
         protected override void OnUpdate()
         {
-            // var soliderPos = soliderQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out var jobHandle1);
-            // Dependency = JobHandle.CombineDependencies(Dependency, jobHandle1);
-            //
-            // Dependency = Entities
-            //     .WithAll<ZombieUnitType>()
-            //     .WithDisposeOnCompletion(soliderPos)
-            //     .ForEach((ref Rotation rotation, in Translation zombiePos) =>
-            //     {
-            //         // 遍历寻找距离最近的Solider Index
-            //         var minDis = float.MaxValue;
-            //         var minPos = float3.zero;
-            //         for (int i = 0; i < soliderPos.Length; i++)
-            //         {
-            //             var distance = math.distances(soliderPos[i].Value, zombiePos.Value);
-            //             if (distance < minDis)
-            //             {
-            //                 minPos = soliderPos[i].Value;
-            //             }
-            //         }
-            //
-            //     }).Schedule(Dependency);
+            var soliderPos = soliderQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out var jobHandle1);
+            Dependency = JobHandle.CombineDependencies(Dependency, jobHandle1);
+
+            Dependency = Entities
+                .WithAll<ZombieUnitType>()
+                .WithDisposeOnCompletion(soliderPos)
+                .ForEach((ref Rotation rotation, in Translation zombiePos) =>
+                {
+                    // 遍历寻找距离最近的Solider Index
+                    var minDis = float.MaxValue;
+                    var minPos = float3.zero;
+                    for (int i = 0; i < soliderPos.Length; i++)
+                    {
+                        var distance = math.distancesq(soliderPos[i].Value, zombiePos.Value);
+                        if (distance < minDis)
+                        {
+                            minPos = soliderPos[i].Value;
+                        }
+                    }
+                }).Schedule(Dependency);
         }
     }
 }
