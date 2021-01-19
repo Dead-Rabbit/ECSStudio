@@ -39,7 +39,7 @@ namespace system
             //         var minPos = float3.zero;
             //         for (int i = 0; i < soliderPos.Length; i++)
             //         {
-            //             var distance = math.distancesq(soliderPos[i].Value, zombiePos.Value);
+            //             var distance = math.distances(soliderPos[i].Value, zombiePos.Value);
             //             if (distance < minDis)
             //             {
             //                 minPos = soliderPos[i].Value;
@@ -47,7 +47,6 @@ namespace system
             //         }
             //
             //     }).Schedule(Dependency);
-
         }
     }
 }
