@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using component.tags;
 using Unity.Animation.Hybrid;
 
-public class Spawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
+public class SpawnerByCount : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
 {
     public GameObject         RigPrefab;
     public AnimationGraphBase GraphPrefab;
@@ -43,7 +43,7 @@ public class Spawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObj
             GraphPrefab.AddGraphSetupComponent(rigPrefab, dstManager, conversionSystem);
         }
 
-        dstManager.AddComponentData(entity, new RigSpawner
+        dstManager.AddComponentData(entity, new RigSpawnerByCount
         {
             RigPrefab = rigPrefab,
             CountX = CountX,
@@ -55,7 +55,7 @@ public class Spawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObj
 }
 // #endif
 
-public struct RigSpawner : IComponentData
+public struct RigSpawnerByCount : IComponentData
 {
     public Entity RigPrefab;
     public int CountX;
@@ -65,7 +65,7 @@ public struct RigSpawner : IComponentData
 }
 
 [UpdateInGroup(typeof(InitializationSystemGroup))]
-public class RigSpawnerSystem : SystemBase
+public class RigSpawnerByCountSystem : SystemBase
 {
     AnimationInputBase m_Input;
 
@@ -81,7 +81,7 @@ public class RigSpawnerSystem : SystemBase
         Entities
             .WithoutBurst()
             .WithStructuralChanges()
-            .ForEach((Entity e, ref RigSpawner spawner) =>
+            .ForEach((Entity e, ref RigSpawnerByCount spawner) =>
             {
                 for (var x = 0; x < spawner.CountX; x++)
                 {
@@ -91,7 +91,6 @@ public class RigSpawnerSystem : SystemBase
                         var translation = new float3(spawner.startPosition.x + x * 1.3F, spawner.startPosition.y, spawner.startPosition.z + y * 1.3F);
 
                         EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
-
                         switch (spawner.typeTag)
                         {
                             case UnitTags.ZOMBIE:

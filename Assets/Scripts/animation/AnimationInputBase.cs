@@ -24,11 +24,11 @@ public abstract class AnimationInputBase<T> : AnimationInputBase
 {
     [HideInInspector] public int m_ActiveEntityIndex;
 
-    private RigSpawnerSystem spawnerSystem;
+    private RigSpawnerByCountSystem spawnerSystem;
 
     void Awake()
     {
-        spawnerSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<RigSpawnerSystem>();
+        spawnerSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<RigSpawnerByCountSystem>();
         spawnerSystem.RegisterInput(this);
     }
 

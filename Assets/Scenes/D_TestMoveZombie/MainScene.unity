@@ -1105,8 +1105,8 @@ MonoBehaviour:
     type: 3}
   GraphPrefab: {fileID: 6228538937142237659, guid: ce230421e6637ab4794f1e48eae63eee,
     type: 3}
-  CountX: 100
-  CountY: 100
+  CountX: 2
+  CountY: 2
   startPosition: {x: 0, y: 0}
   spawnerTag: 1
 --- !u!114 &2132678265
