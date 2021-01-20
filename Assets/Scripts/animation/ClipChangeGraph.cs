@@ -2,7 +2,6 @@ using Unity.Entities;
 using Unity.Animation;
 using Unity.DataFlowGraph;
 using Unity.Animation.Hybrid;
-using Unity.Jobs;
 using Unity.Transforms;
 using UnityEngine;
 

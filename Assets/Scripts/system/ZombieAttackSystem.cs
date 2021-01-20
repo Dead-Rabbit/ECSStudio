@@ -1,3 +1,4 @@
+using System;
 using component.tags;
 using Unity.Collections;
 using Unity.Entities;
@@ -26,6 +27,7 @@ namespace system
 
         protected override void OnUpdate()
         {
+            var DeltaTime = Time.DeltaTime;
             var soliderPos = soliderQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out var jobHandle1);
             Dependency = JobHandle.CombineDependencies(Dependency, jobHandle1);
 
@@ -45,6 +47,12 @@ namespace system
                             minPos = soliderPos[i].Value;
                         }
                     }
+                    Quaternion rota = rotation.Value;
+                    Vector3 origVector = new Vector3(rota.eulerAngles.x, 0, rota.eulerAngles.z);
+                    Vector3 towardVector = minPos - zombiePos.Value;
+                    float angle = math.acos((math.dot(origVector, towardVector)) / (origVector.magnitude * towardVector.magnitude));
+
+                    rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
                 }).Schedule(Dependency);
         }
     }
