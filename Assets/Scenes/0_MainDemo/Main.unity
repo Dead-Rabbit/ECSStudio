@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 491350471}
   - component: {fileID: 491350470}
   m_Layer: 0
-  m_Name: ZombieSpawner
+  m_Name: ZombieRandomSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,10 +297,10 @@ MonoBehaviour:
     type: 3}
   GraphPrefab: {fileID: 6228538937142237659, guid: ce230421e6637ab4794f1e48eae63eee,
     type: 3}
-  GenerateNumberPerTime: 1
-  GenerateRange: 10
+  GenerateNumberPerTime: 3
+  GenerateRange: 40
   GenerateDeltaTime: 2
-  spawnerTag: 0
+  spawnerTag: 1
 --- !u!114 &491350471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &641916940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,7 +364,7 @@ MonoBehaviour:
     type: 3}
   CountX: 1
   CountY: 1
-  startPosition: {x: 0, y: 10}
+  startPosition: {x: 0, y: 1}
   spawnerTag: 0
 --- !u!114 &641916941
 MonoBehaviour:

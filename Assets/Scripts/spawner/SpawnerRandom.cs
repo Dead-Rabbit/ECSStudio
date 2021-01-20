@@ -6,6 +6,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace mono
 {
@@ -46,7 +47,7 @@ namespace mono
             dstManager.AddComponentData(entity, new RigSpawnerRandom
             {
                 RigPrefab = rigPrefab,
-                GeneratePerTime = GenerateNumberPerTime,
+                GenerateNumberPerTime = GenerateNumberPerTime,
                 GenerateDeltaTime = GenerateDeltaTime,
                 GenerateRange = GenerateRange,
                 typeTag = spawnerTag,
@@ -57,7 +58,7 @@ namespace mono
     public struct RigSpawnerRandom : IComponentData
     {
         public Entity RigPrefab;
-        public int GeneratePerTime;
+        public int GenerateNumberPerTime;
         public int GenerateDeltaTime;
         public float GenerateRange;
         public UnitTags typeTag;
@@ -66,9 +67,13 @@ namespace mono
     public class RigSpawnerRandomSystem : SystemBase
     {
         public float curExecuteTime = 0;
+        private uint TotalMId = 1;
 
         protected override void OnUpdate()
         {
+            var time = Time.ElapsedTime;
+            var rand = new Unity.Mathematics.Random(TotalMId + (uint)math.fmod(time * 1000, 1000));
+
             CompleteDependency();
             Entities
                 .WithoutBurst()
@@ -77,21 +82,23 @@ namespace mono
                 {
                     if (curExecuteTime <= 0)
                     {
-                        curExecuteTime = spawner.GenerateDeltaTime;
-
-                        var rigInstance = EntityManager.Instantiate(spawner.RigPrefab);
-                        var translation = new float3(0, 0, 0);
-
-                        EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
-                        switch (spawner.typeTag)
+                        for (int i = 0; i < spawner.GenerateNumberPerTime; i++)
                         {
-                            case UnitTags.ZOMBIE:
-                                EntityManager.AddComponent<ZombieUnitType>(rigInstance);
-                                break;
-                            case UnitTags.SOLIDER:
-                                EntityManager.AddComponent<SoliderUnitType>(rigInstance);
-                                break;
+                            var rigInstance = EntityManager.Instantiate(spawner.RigPrefab);
+                            var angle = rand.NextFloat(0, 360) / 180 * Mathf.PI;
+                            var translation = spawner.GenerateRange * new float3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
+                            EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
+                            switch (spawner.typeTag)
+                            {
+                                case UnitTags.ZOMBIE:
+                                    EntityManager.AddComponent<ZombieUnitType>(rigInstance);
+                                    break;
+                                case UnitTags.SOLIDER:
+                                    EntityManager.AddComponent<SoliderUnitType>(rigInstance);
+                                    break;
+                            }
                         }
+                        curExecuteTime = spawner.GenerateDeltaTime;
                     }
                     curExecuteTime -= Time.DeltaTime;
                 }).Run();
