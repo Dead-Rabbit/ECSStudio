@@ -1,3 +1,4 @@
+using component.tags;
 using Unity.Entities;
 using Unity.Animation;
 using Unity.DataFlowGraph;
@@ -7,10 +8,9 @@ using UnityEngine;
 
 public class ClipChangeGraph : AnimationGraphBase
 {
-    public AnimationClip Clip;
-
     public AnimationClip[] Clips;
-    public Vector3 clipDefaultRotateOffset;
+    public Vector3[] clipDefaultRotateOffset;
+
     public float clipPlaySpeed = 1f;
 
     public string MotionName;
@@ -36,12 +36,18 @@ public class ClipChangeGraph : AnimationGraphBase
 
     public override void AddGraphSetupComponent(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
+        var defaultRotate = clipDefaultRotateOffset[0];
         var graphSetup = new ChangeClipSetup
         {
-            Clip = Clip.ToDenseClip(),
+            Clip = Clips[0].ToDenseClip(),
             MotionID = m_MotionId,
-            playSpeed = clipPlaySpeed
+            playSpeed = clipPlaySpeed,
+            defaultRotationOnSetup = defaultRotate
         };
+        dstManager.AddComponentData(entity, new Rotation()
+        {
+            Value = Quaternion.Euler(defaultRotate)
+        });
 
         var clipBuffer = dstManager.AddBuffer<StoreClipBuffer>(entity);
 
@@ -49,7 +55,8 @@ public class ClipChangeGraph : AnimationGraphBase
         {
             clipBuffer.Add(new StoreClipBuffer
             {
-                Clip = Clips[i].ToDenseClip()
+                Clip = Clips[i].ToDenseClip(),
+                clipRotateOffset = clipDefaultRotateOffset[i]
             });
         }
 
@@ -57,11 +64,14 @@ public class ClipChangeGraph : AnimationGraphBase
         dstManager.AddComponentData(entity, graphSetup);
         dstManager.AddComponent<DeltaTime>(entity);
 
-        // 测试开始时给一个角度（针对当前动画）
-        dstManager.SetComponentData(entity, new Rotation()
+        dstManager.AddComponentData(entity, new AiChangeClipSampleData
         {
-            Value = Quaternion.Euler(clipDefaultRotateOffset)
+            ifModify = false,
+            index = 0
         });
+
+        // 默认首先打上Moving的Tag
+        dstManager.AddComponent<Moving>(entity);
     }
 }
 
@@ -71,12 +81,19 @@ public class ClipChangeGraph : AnimationGraphBase
 public struct StoreClipBuffer : IBufferElementData
 {
     public BlobAssetReference<Clip> Clip;
+    public Vector3 clipRotateOffset;
 }
 
 public struct InputChangeClipSampleData : ISampleData
 {
     public bool ifModify;
-    public int index;
+    public int index;                   // 播放Clip的Index
+}
+
+public struct AiChangeClipSampleData : IComponentData
+{
+    public bool ifModify;
+    public int index; // 播放Clip的Index
 }
 
 public struct ChangeClipSetup : ISampleSetup
@@ -84,6 +101,7 @@ public struct ChangeClipSetup : ISampleSetup
     public BlobAssetReference<Clip> Clip;
     public StringHash MotionID;
     public float playSpeed;
+    public Vector3 defaultRotationOnSetup;
 }
 
 public struct ChangeClipPlayerData : ISampleData
@@ -91,6 +109,8 @@ public struct ChangeClipPlayerData : ISampleData
     public GraphHandle Graph;
     public NodeHandle<ClipPlayerNode> ClipNode;
     public StringHash MotionID;
+    public Vector3 clipRotation;
+    public Vector3 currentRotation;
 }
 
 [UpdateBefore(typeof(DefaultAnimationSystemGroup))]
@@ -111,6 +131,8 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         data.Graph = graphSystem.CreateGraph();
         data.ClipNode = graphSystem.CreateNode<ClipPlayerNode>(data.Graph);
         data.MotionID = setup.MotionID;
+        data.clipRotation = setup.defaultRotationOnSetup;
+        data.currentRotation = setup.defaultRotationOnSetup;
 
         var deltaTimeNode = graphSystem.CreateNode<ConvertDeltaTimeToFloatNode>(data.Graph);
         var entityNode = graphSystem.CreateNode(data.Graph, entity);
@@ -148,21 +170,19 @@ public class ClipChangeGraphSystem : SampleSystemBase<
         base.OnUpdate();
 
         // var DeltaTime = Time.DeltaTime;
-        // Entities
-        //     .WithAll<InputChangeClipSampleData>()
-        //     .ForEach((Entity e, ref ChangeClipPlayerData data, ref InputChangeClipSampleData input, ref Rotation rotation) =>
-        //     {
-        //         // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
-        //
-        //         if (input.ifModify)
-        //         {
-        //             // DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
-        //             // m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[input.index].Clip);
-        //             // Debug.Log("rotation.Value = " + rotation.Value);
-        //             // rotation.Value = new float3(0, rotation.Value.y + 10, 0);
-        //             // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
-        //         }
-        //         input.ifModify = false;
-        //     });
+        Entities
+            .WithAll<AiChangeClipSampleData>()
+            .ForEach((Entity e, ref ChangeClipPlayerData data, ref AiChangeClipSampleData ai, ref Rotation rotation) =>
+            {
+                // 用于旋转（此处保留）
+                // rotation.Value = math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), 1f * DeltaTime));
+
+                if (ai.ifModify)
+                {
+                    DynamicBuffer<StoreClipBuffer> animationBuff = m_AnimationSystem.GetBuffer<StoreClipBuffer>(e);
+                    m_AnimationSystem.Set.SendMessage(data.ClipNode, ClipPlayerNode.SimulationPorts.Clip, animationBuff[ai.index].Clip);
+                }
+                ai.ifModify = false;
+            });
     }
 }

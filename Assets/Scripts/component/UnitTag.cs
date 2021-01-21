@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Unity.Entities;
 
 namespace component.tags
@@ -13,6 +14,14 @@ namespace component.tags
     }
 
     public struct ZombieUnitType : IComponentData
+    {
+    }
+
+    public struct Moving : IComponentData
+    {
+    }
+
+    public struct Attacking : IComponentData
     {
     }
 }

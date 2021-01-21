@@ -43,10 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dce45d6834b3e49ab7284f8643a9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: -203655887218126122, guid: 5375b526366ca7641bf8110eb906e2e9, type: 3}
   Clips:
   - {fileID: -203655887218126122, guid: 5375b526366ca7641bf8110eb906e2e9, type: 3}
   - {fileID: -203655887218126122, guid: 33bfd70e32a6c4a0a8ffaa7e40fdac5e, type: 3}
-  clipDefaultRotateOffset: {x: 0, y: -60.5, z: 0}
+  clipDefaultRotateOffset:
+  - {x: 0, y: -40, z: 0}
+  - {x: 0, y: -60.5, z: 0}
   clipPlaySpeed: 1
   MotionName: Hips
