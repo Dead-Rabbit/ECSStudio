@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scenes.E_A_MONO_FISH_ALGORITHM
+namespace E_A_DEMO_FISH_ALGORITHM.mono
 {
     public class FishSpawner : MonoBehaviour
     {
