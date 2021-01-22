@@ -381,7 +381,7 @@ MonoBehaviour:
   spawnerFish: {fileID: 33556537135479242, guid: 3fd696a086978c243b57edcfbcc47cb3,
     type: 3}
   GenerateRange: 10
-  GenerateCount: 2500
+  GenerateCount: 2200
   SpawnerData: {fileID: 2126446670}
 --- !u!1 &352950453
 GameObject:
@@ -686,7 +686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &830646862
 Transform:
   m_ObjectHideFlags: 0
