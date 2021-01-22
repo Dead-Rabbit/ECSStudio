@@ -17,8 +17,6 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
 
         [Header("移动速度")]
         public float moveSpeed;
-        [Header("旋转速度")]
-        public float rotateSpeed;
 
         public FishSpawnerData spawnerData;
 
@@ -116,7 +114,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
             //——————————防抖
             if (forwardDir < 0.98f)
             {
-                finialRotate = Mathf.Clamp(rotateDir * 180, -rotateSpeed, rotateSpeed);
+                finialRotate = Mathf.Clamp(rotateDir * 180, -spawnerData.rotateSpeed, spawnerData.rotateSpeed);
             }
 
             finialSpeed *= Mathf.Clamp01(_dir.magnitude);

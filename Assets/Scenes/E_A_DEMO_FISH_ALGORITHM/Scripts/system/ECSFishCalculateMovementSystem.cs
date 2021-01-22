@@ -44,8 +44,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
                 .WithDisposeOnCompletion(fishMovementArray)
                 .WithDisposeOnCompletion(targetMomentArray)
                 .ForEach((Entity e, int entityInQueryIndex, ref Translation translation,
-                    ref Rotation rotation, ref ECSFishMoveComponentData moveAct,
-                    ref LocalToWorld localToWorld, in ECSFishMovementData movementData) =>
+                    ref Rotation rotation, ref ECSFishMoveComponentData moveAct, in ECSFishMovementData movementData) =>
                     {
                         if (targetMomentArray.Length == 0)
                         {
@@ -99,6 +98,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
 
                         // 修改对应 MoveAct
                         // localToWorld.Right = -dir;
+                        rotation.Value = Quaternion.FromToRotation(Vector3.right, -dir);
                         moveAct.dir = dir;
                         moveAct.speed = Mathf.Lerp(moveAct.speed, targetSpeed, 2 * DeltaTime);
                     }).Schedule(Dependency);

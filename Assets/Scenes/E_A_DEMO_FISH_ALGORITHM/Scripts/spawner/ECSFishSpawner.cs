@@ -38,6 +38,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                 GenerateCount = GenerateCount,
                 FishMinSpeed = SpawnerData.FishMinSpeed,
                 FishMaxSpeed = SpawnerData.FishMaxSpeed,
+                rotateSpeed = SpawnerData.rotateSpeed,
                 keepDis = SpawnerData.keepDis,
                 keepWeight = SpawnerData.keepWeight,
                 targetCloseDistance = SpawnerData.targetCloseDistance,
@@ -53,6 +54,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
         public float GenerateCount;       // 生成数量
         public float FishMinSpeed;        // 最小速度
         public float FishMaxSpeed;        // 最大速度
+        public float rotateSpeed;         // 旋转速度
         public float keepDis;             // 鱼之间距离
         public float keepWeight;          // 保持距离的权重
         public float targetCloseDistance; // 多少距离算离得太近
@@ -93,11 +95,11 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                             Value = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), 0)
                         });
 
-                        // 随机速度
                         EntityManager.AddComponentData(fishInstance, new ECSFishMovementData
                         {
                             ID = i,
                             moveSpeed = Random.Range(spawner.FishMinSpeed, spawner.FishMaxSpeed),
+                            rotateSpeed = spawner.rotateSpeed,
                             keepWeight = spawner.keepWeight,
                             keepDis = spawner.keepDis,
                             distanceSquare = keepDistanceSquare,
@@ -110,6 +112,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                         {
                             speed = 0,
                             dir = Vector3.zero,
+                            currentSpeed = 0
                         });
                     }
                     EntityManager.DestroyEntity(entity);

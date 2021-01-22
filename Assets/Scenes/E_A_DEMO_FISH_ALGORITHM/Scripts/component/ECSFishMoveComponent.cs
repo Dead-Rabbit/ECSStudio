@@ -7,6 +7,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.component
     {
         public int ID;
         public float moveSpeed;           // 移动速度
+        public float rotateSpeed;         // 旋转速度
         public float keepDis;             // 保持的距离
         public float distanceSquare;      // 距离判断
         public float keepWeight;          // 保持距离的权重
@@ -20,5 +21,6 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.component
     {
         public Vector3 dir;
         public float speed;
+        public float currentSpeed;
     }
 }
