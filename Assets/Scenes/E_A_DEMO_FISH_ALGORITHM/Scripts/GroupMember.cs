@@ -25,7 +25,6 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
             myGroup.GroupMemberRegister(this);
             keepDisSquare = spawnerData.keepDis * spawnerData.keepDis;
             moveSpeed = Random.Range(spawnerData.FishMinSpeed, spawnerData.FishMaxSpeed);
-            Debug.Log($"Mono Random Speed is :{moveSpeed}");
         }
 
         void Update()
