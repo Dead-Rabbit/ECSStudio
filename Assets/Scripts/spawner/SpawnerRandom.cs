@@ -85,7 +85,8 @@ namespace mono
                         for (int i = 0; i < spawner.GenerateNumberPerTime; i++)
                         {
                             var rigInstance = EntityManager.Instantiate(spawner.RigPrefab);
-                            var angle = rand.NextFloat(0, 360) / 180 * Mathf.PI;
+                            var angle = rand.NextFloat(0, 360);
+                            Debug.Log(angle);
                             var translation = spawner.GenerateRange * new float3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
                             EntityManager.SetComponentData(rigInstance, new Translation { Value = translation });
                             switch (spawner.typeTag)

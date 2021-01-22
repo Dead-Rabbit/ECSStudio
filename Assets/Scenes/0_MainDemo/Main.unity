@@ -298,8 +298,8 @@ MonoBehaviour:
   GraphPrefab: {fileID: 6228538937142237659, guid: ce230421e6637ab4794f1e48eae63eee,
     type: 3}
   GenerateNumberPerTime: 1
-  GenerateRange: 5
-  GenerateDeltaTime: 1000
+  GenerateRange: 8
+  GenerateDeltaTime: 3
   spawnerTag: 1
 --- !u!114 &491350471
 MonoBehaviour:

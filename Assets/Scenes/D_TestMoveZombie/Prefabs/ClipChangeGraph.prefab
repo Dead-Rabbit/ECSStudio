@@ -48,6 +48,6 @@ MonoBehaviour:
   - {fileID: -203655887218126122, guid: 33bfd70e32a6c4a0a8ffaa7e40fdac5e, type: 3}
   clipDefaultRotateOffset:
   - {x: 0, y: -40, z: 0}
-  - {x: 0, y: -60.5, z: 0}
+  - {x: 0, y: -40, z: 0}
   clipPlaySpeed: 1
   MotionName: Hips
