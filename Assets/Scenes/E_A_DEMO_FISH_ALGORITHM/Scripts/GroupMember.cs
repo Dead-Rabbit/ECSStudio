@@ -15,18 +15,18 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
         private float currentSpeed;
         private Vector3 myMovement;
 
-        [Header("属于的组ID")]
-        public int groupId;
         [Header("移动速度")]
         public float moveSpeed;
         [Header("旋转速度")]
         public float rotateSpeed;
 
+        public FishSpawnerData spawnerData;
+
         private void Start()
         {
-            myGroup = GroupController.GetGroup(groupId);
+            myGroup = GroupController.GetGroup();
             myGroup.GroupMemberRegister(this);
-            keepDisSquare = myGroup.keepDis * myGroup.keepDis;
+            keepDisSquare = spawnerData.keepDis * spawnerData.keepDis;
         }
 
         void Update()
@@ -40,14 +40,14 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
             Vector3 dir = dis.normalized;
 
             //重新计算目的地距离权重
-            if (dis.magnitude < myGroup.targetCloseDistance)
+            if (dis.magnitude < spawnerData.targetCloseDistance)
             {
-                dir *= dis.magnitude / myGroup.targetCloseDistance;
+                dir *= dis.magnitude / spawnerData.targetCloseDistance;
             }
             dir += GetAroundMemberInfo();       //获取周围组的移动
 
             //计算移动速度
-            if ((myGroup.transform.position - transform.position).magnitude < myGroup.stopDis)
+            if ((myGroup.transform.position - transform.position).magnitude < spawnerData.stopDis)
             {
                 targetSpeed = 0;
             }
@@ -71,30 +71,25 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
             // 此处使用碰撞体，修改为位置判断试试
             // Collider[] c = Physics.OverlapSphere(transform.position, myGroup.keepDis, myGroup.mask);
             // Collider2D[] c = Physics2D.OverlapCircleAll(transform.position, myGroup.keepDis, myGroup.mask); //获取周围成员
-            // 通过遍历的方式获取彼此距离
-            List<GroupMember> targetGroupMembers = new List<GroupMember>();
-            foreach (GroupMember member in myGroup.GetSameGroupMembers())
+
+            Vector3 v1 = Vector3.zero;
+            Vector3 v2 = Vector3.zero;
+
+            foreach (GroupMember otherMember in myGroup.GetSameGroupMembers())
             {
-                if (member == this)
+                if (otherMember == this)
                     continue;
-                if ((member.transform.position - transform.position).sqrMagnitude < keepDisSquare)
+
+                if ((otherMember.transform.position - transform.position).sqrMagnitude < keepDisSquare)
                 {
-                    targetGroupMembers.Add(member);
+                    var dis = transform.position - otherMember.transform.position;
+                    v1 += dis.normalized * (1 - dis.magnitude / spawnerData.keepDis); // 查看与周围成员的距离
+                    v2 += otherMember.myMovement;                                     // 查看周围成员移动方向
+                    // Debug.DrawLine(transform.position, otherMember.transform.position, Color.yellow);
                 }
             }
 
-            Vector3 dis;
-            Vector3 v1 = Vector3.zero;
-            Vector3 v2 = Vector3.zero;
-            for (int i = 0; i < targetGroupMembers.Count; i++)
-            {
-                GroupMember otherMember = targetGroupMembers[i];
-                dis = transform.position - otherMember.transform.position;  // 距离
-                v1 += dis.normalized * (1 - dis.magnitude / myGroup.keepDis); // 查看与周围成员的距离
-                v2 += otherMember.myMovement;                               // 查看周围成员移动方向
-                // Debug.DrawLine(transform.position, otherMember.transform.position, Color.yellow);
-            }
-            return v1.normalized * myGroup.keepWeight + v2.normalized;//添加权重因素
+            return v1.normalized * spawnerData.keepWeight + v2.normalized;//添加权重因素
         }
 
         /// <summary>

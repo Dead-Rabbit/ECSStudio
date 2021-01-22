@@ -8,6 +8,8 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
         public GameObject spawnerFish;
         [Header("根节点")]
         public GameObject spawnerRoot;
+        [Header("生成范围")]
+        public float GenerateRange = 10;
 
         public int GenerateCount = 100;
         public FishSpawnerData spawnerData;
@@ -19,7 +21,6 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
                 return;
             }
 
-            var GenerateRange = spawnerData.GenerateRange;
             for (int i = 0; i < GenerateCount; i++)
             {
                 GameObject newFish = Instantiate(spawnerFish, spawnerRoot.transform, true);

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using E_A_DEMO_FISH_ALGORITHM.mono.component;
+using E_A_DEMO_FISH_ALGORITHM.ecs.component;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -13,6 +13,8 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
     {
         [Header("鱼类制体")]
         public GameObject spawnerFish;
+        [Header("生成范围")]
+        public float GenerateRange = 10;
 
         public int GenerateCount = 100;
         public FishSpawnerData SpawnerData;
@@ -31,21 +33,29 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
             dstManager.AddComponentData(entity, new ECSFishSpawnerData
             {
                 entity = fishPrefabEntity,
-                GenerateRange = SpawnerData.GenerateRange,
+                GenerateRange = GenerateRange,
                 GenerateCount = GenerateCount,
                 FishMinSpeed = SpawnerData.FishMinSpeed,
-                FishMaxSpeed = SpawnerData.FishMaxSpeed
+                FishMaxSpeed = SpawnerData.FishMaxSpeed,
+                keepDis = SpawnerData.keepDis,
+                keepWeight = SpawnerData.keepWeight,
+                targetCloseDistance = SpawnerData.targetCloseDistance,
+                stopDistance = SpawnerData.stopDis
             });
         }
     }
 
     public struct ECSFishSpawnerData : IComponentData
     {
-        public Entity entity;
-        public float GenerateRange;
-        public float GenerateCount;
-        public float FishMinSpeed;
-        public float FishMaxSpeed;
+        public Entity entity;             // 记录Prefab对应的主要Entity
+        public float GenerateRange;       // 生成Entity的范围
+        public float GenerateCount;       // 生成数量
+        public float FishMinSpeed;        // 最小速度
+        public float FishMaxSpeed;        // 最大速度
+        public float keepDis;             // 鱼之间距离
+        public float keepWeight;          // 保持距离的权重
+        public float targetCloseDistance; // 多少距离算离得太近
+        public float stopDistance;        // 停止移动距离
     }
 
     [UpdateInGroup(typeof(InitializationSystemGroup))]
@@ -81,9 +91,16 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                         });
 
                         // 随机速度
-                        EntityManager.AddComponentData(fishInstance, new ECSFishMoveComponent
+                        float keepDistanceSquare = spawner.keepDis * spawner.keepDis;
+                        EntityManager.AddComponentData(fishInstance, new ECSFishMoveComponentData
                         {
-                            moveSpeed = Random.Range(spawner.FishMinSpeed, spawner.FishMaxSpeed)
+                            ID = i,
+                            moveSpeed = Random.Range(spawner.FishMinSpeed, spawner.FishMaxSpeed),
+                            keepWeight = spawner.keepWeight,
+                            keepDis = spawner.keepDis,
+                            distanceSquare = keepDistanceSquare,
+                            targetCloseDistance = spawner.targetCloseDistance,
+                            stopDistance = spawner.stopDistance
                         });
                     }
                     EntityManager.DestroyEntity(entity);
