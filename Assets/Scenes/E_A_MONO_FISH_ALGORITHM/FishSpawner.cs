@@ -4,10 +4,15 @@ namespace Scenes.E_A_MONO_FISH_ALGORITHM
 {
     public class FishSpawner : MonoBehaviour
     {
+        [Header("鱼类制体")]
         public GameObject spawnerFish;
+        [Header("根节点")]
         public GameObject spawnerRoot;
+        [Header("生成范围")]
         public float GenerateRange = 10;
+        [Header("生成数量")]
         public int GenerateCount = 10;
+        [Header("随机移动速度")]
         public float FishMinSpeed = 40;
         public float FishMaxSpeed = 55;
 
