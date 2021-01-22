@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 809776925259752304}
   - component: {fileID: 1440296169}
+  - component: {fileID: 1230596862535254266}
   m_Layer: 8
   m_Name: fish_bait
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,8 +46,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groupId: 1
-  moveSpeed: 5
-  rotateSpeed: 2
+  moveSpeed: 100
+  rotateSpeed: 50
+--- !u!135 &1230596862535254266
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33556537135479242}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.2670755
+  m_Center: {x: 0, y: 0, z: 0.60292435}
 --- !u!1 &8971704788121694481
 GameObject:
   m_ObjectHideFlags: 0

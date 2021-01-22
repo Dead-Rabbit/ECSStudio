@@ -40,7 +40,7 @@ public class GroupMember : MonoBehaviour
         {
             dir *= dis.magnitude / myGroup.targetCloseDistance;
         }
-        dir += GetAroundMemberInfo();//获取周围组的移动
+        dir += GetAroundMemberInfo();           //获取周围组的移动
 
         //计算移动速度
         if ((myGroup.transform.position - transform.position).magnitude < myGroup.stopDis)
@@ -64,7 +64,9 @@ public class GroupMember : MonoBehaviour
     /// <returns></returns>
     private Vector3 GetAroundMemberInfo()
     {
-        Collider2D[] c = Physics2D.OverlapCircleAll(transform.position, myGroup.keepDis, myGroup.mask);//获取周围成员
+        Collider[] c = Physics.OverlapSphere(transform.position, myGroup.keepDis, myGroup.mask);
+        // Collider2D[] c = Physics2D.OverlapCircleAll(transform.position, myGroup.keepDis, myGroup.mask); //获取周围成员
+        Debug.Log(c.Length);
         Vector3 dis;
         Vector3 v1 = Vector3.zero;
         Vector3 v2 = Vector3.zero;
