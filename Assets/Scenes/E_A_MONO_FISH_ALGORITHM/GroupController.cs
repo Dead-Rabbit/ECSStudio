@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -6,7 +7,9 @@ using System.Collections.Generic;
 /// </summary>
 public class GroupController : MonoBehaviour
 {
-    private static List<GroupController> groups; //所有组
+    // private static List<GroupController> groups; //所有组
+
+    private static GroupController group;
 
     [Header("组中成员的层")]
     public LayerMask mask;
@@ -21,6 +24,11 @@ public class GroupController : MonoBehaviour
     [Header("组中成员停止移动的距离")]
     public float stopDis;
 
+    public void Awake()
+    {
+        group = this;
+    }
+
     /// <summary>
     /// 得到成员属于哪个组
     /// </summary>
@@ -28,18 +36,20 @@ public class GroupController : MonoBehaviour
     /// <returns></returns>
     public static GroupController GetGroup(int index)
     {
-        if (groups == null)
-        {
-            groups = new List<GroupController>(FindObjectsOfType(typeof(GroupController)) as GroupController[]);
-        }
+        // if (groups == null)
+        // {
+        //     groups = new List<GroupController>(FindObjectsOfType(typeof(GroupController)) as GroupController[]);
+        // }
+        //
+        // for (int i = 0; i < groups.Count; i++)
+        // {
+        //     if (groups[i].groupID == index)
+        //     {
+        //         return groups[i];
+        //     }
+        // }
+        return group;
 
-        for (int i = 0; i < groups.Count; i++)
-        {
-            if (groups[i].groupID == index)
-            {
-                return groups[i];
-            }
-        }
         throw new System.Exception("没有找到相同ID的组");
     }
 }

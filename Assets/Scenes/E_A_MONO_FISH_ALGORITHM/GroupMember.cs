@@ -27,6 +27,11 @@ public class GroupMember : MonoBehaviour
 
     void Update()
     {
+        if (null == myGroup)
+        {
+            return;
+        }
+
         Vector3 dis = myGroup.transform.position - transform.position;
         Vector3 dir = dis.normalized;
 
@@ -66,9 +71,9 @@ public class GroupMember : MonoBehaviour
         for (int i = 0; i < c.Length; i++)
         {
             GroupMember otherMember = c[i].GetComponent<GroupMember>();
-            dis = transform.position - otherMember.transform.position;//距离
-            v1 += dis.normalized * (1 - dis.magnitude / myGroup.keepDis);//查看与周围成员的距离
-            v2 += otherMember.myMovement;//查看周围成员移动方向
+            dis = transform.position - otherMember.transform.position;      // 距离
+            v1 += dis.normalized * (1 - dis.magnitude / myGroup.keepDis);   // 查看与周围成员的距离
+            v2 += otherMember.myMovement;                                   // 查看周围成员移动方向
 
             Debug.DrawLine(transform.position, otherMember.transform.position, Color.yellow);
         }
