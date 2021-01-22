@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/E_A_DEMO_FISH_ALGORITHM/MainScene.unity
+    guid: 6e0aa8d279a8e794086a41256c91bcdb
   m_configObjects: {}

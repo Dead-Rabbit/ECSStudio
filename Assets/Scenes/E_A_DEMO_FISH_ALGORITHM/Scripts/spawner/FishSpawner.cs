@@ -11,7 +11,6 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
         [Header("生成范围")]
         public float GenerateRange = 10;
 
-        public int GenerateCount = 100;
         public FishSpawnerData spawnerData;
 
         public void Start()
@@ -21,7 +20,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
                 return;
             }
 
-            for (int i = 0; i < GenerateCount; i++)
+            for (int i = 0; i < spawnerData.GenerateFishNums; i++)
             {
                 GameObject newFish = Instantiate(spawnerFish, spawnerRoot.transform, true);
                 newFish.transform.name = "Fish_" + i;

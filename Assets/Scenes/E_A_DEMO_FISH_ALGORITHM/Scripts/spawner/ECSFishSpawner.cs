@@ -17,7 +17,6 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
         [Header("生成范围")]
         public float GenerateRange = 10;
 
-        public int GenerateCount = 100;
         public FishSpawnerData SpawnerData;
 
         public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
@@ -35,7 +34,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
             {
                 entity = fishPrefabEntity,
                 GenerateRange = GenerateRange,
-                GenerateCount = GenerateCount,
+                GenerateCount = SpawnerData.GenerateFishNums,
                 FishMinSpeed = SpawnerData.FishMinSpeed,
                 FishMaxSpeed = SpawnerData.FishMaxSpeed,
                 rotateSpeed = SpawnerData.rotateSpeed,

@@ -13,5 +13,7 @@ namespace E_A_DEMO_FISH_ALGORITHM
         [Header("多少距离算离得太近")] public float targetCloseDistance = 0.5f;
         [Header("停止移动的距离")] public float stopDis = 0.001f;
         [Header("旋转速度")] public float rotateSpeed;
+
+        public int GenerateFishNums = 0;
     }
 }
