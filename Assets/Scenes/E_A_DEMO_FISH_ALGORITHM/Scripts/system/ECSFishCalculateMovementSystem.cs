@@ -20,6 +20,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
                 ComponentType.ReadOnly<Translation>()
             );
             targetPosQuery = GetEntityQuery(
+                ComponentType.ReadOnly<ECSTargetComponent>(),
                 ComponentType.ReadOnly<Translation>());
         }
 
@@ -53,6 +54,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
 
                         // 当前点到目标点的距离
                         var targetPos = targetMomentArray[0].Value;
+
                         Vector3 dis =  targetPos - translation.Value;
                         Vector3 dir = dis.normalized;
 
@@ -62,7 +64,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
                             dir *= dis.magnitude / movementData.targetCloseDistance;
                         }
 
-                        // Debug.Log($"===================From:{movementData.ID}");
+                        // Debug.Log($"Run Calculate In:{movementData.ID}");
                         Vector3 v1 = Vector3.zero;
                         Vector3 v2 = Vector3.zero;
                         for (int i = 0; i < fishPosArray.Length; i++)
@@ -86,21 +88,19 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
                         dir += v1.normalized * movementData.keepWeight + v2.normalized;
 
                         //计算移动速度
-                        float targetSpeed = 0;
                         if (dis.sqrMagnitude < movementData.stopDistanceSquare)
                         {
-                            targetSpeed = 0;
+                            moveAct.targetSpeed = 0;
                         }
                         else
                         {
-                            targetSpeed = movementData.moveSpeed;
+                            moveAct.targetSpeed = movementData.moveSpeed;
                         }
 
-                        // 修改对应 MoveAct
-                        // localToWorld.Right = -dir;
+                        moveAct.speed = Mathf.Lerp(moveAct.speed, moveAct.targetSpeed, 2 * DeltaTime);
+
                         rotation.Value = Quaternion.FromToRotation(Vector3.right, -dir);
                         moveAct.dir = dir;
-                        moveAct.speed = Mathf.Lerp(moveAct.speed, targetSpeed, 2 * DeltaTime);
                     }).Schedule(Dependency);
         }
     }

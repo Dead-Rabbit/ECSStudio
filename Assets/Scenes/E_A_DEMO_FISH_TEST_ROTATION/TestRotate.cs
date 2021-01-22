@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class TestRotate : MonoBehaviour
@@ -14,6 +15,12 @@ public class TestRotate : MonoBehaviour
     private void Update()
     {
         transform.right = dir;
+
+        // transform.Translate(Vector3.left * 0.1f * Time.deltaTime);
+
+        // transform.position = transform.position + Vector3.left * 0.1f * Time.deltaTime;
+
+        transform.position = transform.position + ((Vector3)(math.left() * 0.1f * Time.deltaTime));
     }
 
     private void OnDrawGizmos()

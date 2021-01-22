@@ -84,6 +84,12 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                         var randomPosition = new float3(Random.Range(-generateRange, generateRange),
                             Random.Range(-generateRange, generateRange),
                             Random.Range(-generateRange, generateRange));
+                        var randomRotation = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), 0);
+                        if (i == 0)
+                        {
+                            randomPosition = new float3(0, 0, 0);
+                            randomRotation = Quaternion.Euler(0, 0, 1);
+                        }
                         EntityManager.AddComponentData(fishInstance, new Translation
                         {
                             Value = randomPosition
@@ -92,7 +98,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                         // 随机方向
                         EntityManager.AddComponentData(fishInstance, new Rotation
                         {
-                            Value = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), 0)
+                            Value = randomRotation
                         });
 
                         EntityManager.AddComponentData(fishInstance, new ECSFishMovementData
@@ -112,6 +118,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                         {
                             speed = 0,
                             dir = Vector3.zero,
+                            targetSpeed = 0,
                             currentSpeed = 0
                         });
                     }

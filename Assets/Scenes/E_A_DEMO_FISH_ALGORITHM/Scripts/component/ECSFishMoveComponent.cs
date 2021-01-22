@@ -21,6 +21,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.component
     {
         public Vector3 dir;
         public float speed;
+        public float targetSpeed;
         public float currentSpeed;
     }
 }

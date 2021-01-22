@@ -25,12 +25,21 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
             {
                 GameObject newFish = Instantiate(spawnerFish, spawnerRoot.transform, true);
                 newFish.transform.name = "Fish_" + i;
-                newFish.transform.position = new Vector3(Random.Range(-GenerateRange, GenerateRange),
-                    Random.Range(-GenerateRange, GenerateRange),
-                    Random.Range(-GenerateRange, GenerateRange));
+
+                if (i == 0)
+                {
+                    newFish.transform.position = Vector3.zero;
+                    newFish.transform.rotation = Quaternion.Euler(0, 0, 1);
+                }
+                else
+                {
+                    newFish.transform.position = new Vector3(Random.Range(-GenerateRange, GenerateRange),
+                        Random.Range(-GenerateRange, GenerateRange),
+                        Random.Range(-GenerateRange, GenerateRange));
+                    newFish.transform.rotation = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+                }
                 newFish.GetComponent<GroupMember>().spawnerData = spawnerData;
                 newFish.GetComponent<GroupMember>().moveSpeed = Random.Range(spawnerData.FishMinSpeed, spawnerData.FishMaxSpeed);
-                newFish.transform.rotation = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
             }
         }
     }

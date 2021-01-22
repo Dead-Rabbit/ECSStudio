@@ -381,7 +381,7 @@ MonoBehaviour:
   spawnerFish: {fileID: 33556537135479242, guid: 3fd696a086978c243b57edcfbcc47cb3,
     type: 3}
   GenerateRange: 10
-  GenerateCount: 2
+  GenerateCount: 1
   SpawnerData: {fileID: 2126446670}
 --- !u!1 &352950453
 GameObject:
@@ -428,7 +428,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &414877201
 Transform:
   m_ObjectHideFlags: 0
@@ -1174,7 +1174,7 @@ MonoBehaviour:
     type: 3}
   spawnerRoot: {fileID: 352950453}
   GenerateRange: 10
-  GenerateCount: 100
+  GenerateCount: 1
   spawnerData: {fileID: 2126446670}
 --- !u!1 &2096874469
 GameObject:

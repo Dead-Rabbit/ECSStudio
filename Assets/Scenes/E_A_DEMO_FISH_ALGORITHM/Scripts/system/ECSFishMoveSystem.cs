@@ -20,6 +20,8 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
                     var _dir = moveAct.dir;
                     var _speed = moveAct.speed;
 
+                    // Debug.Log($"Run Move In:{movementData.ID}");
+
                     Vector3 finialDirection = _dir.normalized;
                     float finialSpeed = _speed, finialRotate = 0;
                     float rotateDir = Vector3.Dot(finialDirection, localToWorld.Right);
@@ -43,10 +45,9 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
                     finialSpeed *= Mathf.Clamp01(_dir.magnitude);
                     finialSpeed *= Mathf.Clamp01(1 - Mathf.Abs(rotateDir) * 0.8f);
 
-                    // transform.Translate(Vector3.left * finialSpeed * DeltaTime);
-                    float3 trans = translation.Value + math.left() * finialSpeed * DeltaTime;
+                    float3 trans = translation.Value - localToWorld.Right * finialSpeed * DeltaTime;
                     translation.Value = trans;
-                    // transform.Rotate(Vector3.forward * finialRotate * DeltaTime);
+
                     rotation.Value *= Quaternion.Euler(Vector3.forward * finialRotate * DeltaTime);
 
                     moveAct.currentSpeed = finialSpeed;
