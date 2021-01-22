@@ -1,4 +1,5 @@
 using E_A_DEMO_FISH_ALGORITHM.ecs.component;
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -9,6 +10,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
     [UpdateAfter(typeof(ECSFishCalculateMovementSystem))]
     public class ECSFishMoveSystem : SystemBase
     {
+        [BurstCompile]
         protected override void OnUpdate()
         {
             var DeltaTime = Time.DeltaTime;
