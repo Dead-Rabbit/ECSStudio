@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Packages.Rider.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 
