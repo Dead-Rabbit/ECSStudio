@@ -5,7 +5,6 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
 {
     public class GroupMember : MonoBehaviour
     {
-        [Header("成员保持距离")]
         private float keepDisSquare;
 
         private GroupController myGroup;//当前成员的GroupController组件
