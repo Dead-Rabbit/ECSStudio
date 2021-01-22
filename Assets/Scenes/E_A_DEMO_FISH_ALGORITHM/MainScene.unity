@@ -941,10 +941,10 @@ MonoBehaviour:
   spawnerFish: {fileID: 33556537135479242, guid: 3fd696a086978c243b57edcfbcc47cb3,
     type: 3}
   spawnerRoot: {fileID: 352950453}
-  GenerateRange: 40
+  GenerateRange: 20
   GenerateCount: 500
   FishMinSpeed: 70
-  FishMaxSpeed: 300
+  FishMaxSpeed: 250
 --- !u!1 &2096874469
 GameObject:
   m_ObjectHideFlags: 0

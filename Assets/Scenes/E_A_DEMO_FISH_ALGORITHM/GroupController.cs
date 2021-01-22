@@ -16,7 +16,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
         [Header("多少距离算离得太近")] public float targetCloseDistance;
         [Header("组中成员停止移动的距离")] public float stopDis;
 
-        private List<GroupMember> _members;
+        private readonly List<GroupMember> _members = new List<GroupMember>();
 
         public void Awake()
         {

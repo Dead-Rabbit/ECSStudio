@@ -6,7 +6,6 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
     public class GroupMember : MonoBehaviour
     {
         [Header("成员保持距离")]
-        public float keepDis;
         private float keepDisSquare;
 
         private GroupController myGroup;//当前成员的GroupController组件
@@ -25,9 +24,9 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
 
         private void Start()
         {
-            keepDisSquare = keepDis * keepDis;
             myGroup = GroupController.GetGroup(groupId);
             myGroup.GroupMemberRegister(this);
+            keepDisSquare = myGroup.keepDis * myGroup.keepDis;
         }
 
         void Update()
