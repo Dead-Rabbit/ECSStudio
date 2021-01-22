@@ -101,10 +101,12 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                             Value = randomRotation
                         });
 
+                        var randomSpeed = Random.Range(spawner.FishMinSpeed, spawner.FishMaxSpeed);
+                        Debug.Log($"ECS Random Speed is :{randomSpeed}");
                         EntityManager.AddComponentData(fishInstance, new ECSFishMovementData
                         {
                             ID = i,
-                            moveSpeed = Random.Range(spawner.FishMinSpeed, spawner.FishMaxSpeed),
+                            moveSpeed = randomSpeed,
                             rotateSpeed = spawner.rotateSpeed,
                             keepWeight = spawner.keepWeight,
                             keepDis = spawner.keepDis,
