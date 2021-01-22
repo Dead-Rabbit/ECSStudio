@@ -28,6 +28,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
                 newFish.transform.position = new Vector3(Random.Range(-GenerateRange, GenerateRange),
                     Random.Range(-GenerateRange, GenerateRange),
                     Random.Range(-GenerateRange, GenerateRange));
+                newFish.GetComponent<GroupMember>().spawnerData = spawnerData;
                 newFish.GetComponent<GroupMember>().moveSpeed = Random.Range(spawnerData.FishMinSpeed, spawnerData.FishMaxSpeed);
                 newFish.transform.rotation = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
             }

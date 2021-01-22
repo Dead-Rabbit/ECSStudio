@@ -28,7 +28,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.mono
 
         void Update()
         {
-            if (null == myGroup)
+            if (null == myGroup || null == spawnerData)
             {
                 return;
             }
