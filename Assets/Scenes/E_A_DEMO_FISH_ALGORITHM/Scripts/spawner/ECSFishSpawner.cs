@@ -4,6 +4,7 @@ using E_A_DEMO_FISH_ALGORITHM.ecs.component;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -70,6 +71,8 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                 .WithStructuralChanges()
                 .ForEach((Entity entity, in ECSFishSpawnerData spawner) =>
                 {
+                    float keepDistanceSquare = spawner.keepDis * spawner.keepDis;
+                    float stopDistanceSquare = spawner.stopDistance * spawner.stopDistance;
                     for (int i = 0; i < spawner.GenerateCount; i++)
                     {
                         var fishInstance = EntityManager.Instantiate(spawner.entity);
@@ -91,8 +94,7 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                         });
 
                         // 随机速度
-                        float keepDistanceSquare = spawner.keepDis * spawner.keepDis;
-                        EntityManager.AddComponentData(fishInstance, new ECSFishMoveComponentData
+                        EntityManager.AddComponentData(fishInstance, new ECSFishMovementData
                         {
                             ID = i,
                             moveSpeed = Random.Range(spawner.FishMinSpeed, spawner.FishMaxSpeed),
@@ -100,7 +102,14 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs
                             keepDis = spawner.keepDis,
                             distanceSquare = keepDistanceSquare,
                             targetCloseDistance = spawner.targetCloseDistance,
-                            stopDistance = spawner.stopDistance
+                            stopDistance = spawner.stopDistance,
+                            stopDistanceSquare = stopDistanceSquare
+                        });
+
+                        EntityManager.AddComponentData(fishInstance, new ECSFishMoveComponentData
+                        {
+                            speed = 0,
+                            dir = Vector3.zero,
                         });
                     }
                     EntityManager.DestroyEntity(entity);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace E_A_DEMO_FISH_ALGORITHM.ecs.component
 {
-    public struct ECSFishMoveComponentData : IComponentData
+    public struct ECSFishMovementData : IComponentData
     {
         public int ID;
         public float moveSpeed;           // 移动速度
@@ -12,6 +12,13 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.component
         public float keepWeight;          // 保持距离的权重
         public float targetCloseDistance; // 多少距离算离得太近
         public float stopDistance;        // 停止移动距离
+        public float stopDistanceSquare;  // 判断停止移动距离
         public Vector3 myMovement;
+    }
+
+    public struct ECSFishMoveComponentData : IComponentData
+    {
+        public Vector3 dir;
+        public float speed;
     }
 }
