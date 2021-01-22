@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groupId: 1
-  moveSpeed: 100
-  rotateSpeed: 50
+  moveSpeed: 50
+  rotateSpeed: 1
 --- !u!135 &1230596862535254266
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -64,9 +64,10 @@ public class GroupMember : MonoBehaviour
     /// <returns></returns>
     private Vector3 GetAroundMemberInfo()
     {
+        // 此处使用碰撞体，修改为位置判断试试
         Collider[] c = Physics.OverlapSphere(transform.position, myGroup.keepDis, myGroup.mask);
         // Collider2D[] c = Physics2D.OverlapCircleAll(transform.position, myGroup.keepDis, myGroup.mask); //获取周围成员
-        Debug.Log(c.Length);
+
         Vector3 dis;
         Vector3 v1 = Vector3.zero;
         Vector3 v2 = Vector3.zero;
@@ -76,8 +77,7 @@ public class GroupMember : MonoBehaviour
             dis = transform.position - otherMember.transform.position;      // 距离
             v1 += dis.normalized * (1 - dis.magnitude / myGroup.keepDis);   // 查看与周围成员的距离
             v2 += otherMember.myMovement;                                   // 查看周围成员移动方向
-
-            Debug.DrawLine(transform.position, otherMember.transform.position, Color.yellow);
+            // Debug.DrawLine(transform.position, otherMember.transform.position, Color.yellow);
         }
         return v1.normalized * myGroup.keepWeight + v2.normalized;//添加权重因素
     }

@@ -349,7 +349,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &414877200
 GameObject:
@@ -438,6 +438,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1674196149}
+  - component: {fileID: 1674196152}
   - component: {fileID: 1674196150}
   m_Layer: 0
   m_Name: GroupControllerTarget
@@ -454,11 +455,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674196148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1000, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1674196150
 MonoBehaviour:
@@ -476,10 +477,29 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groupID: 1
-  keepDis: 5
-  keepWeight: 1
-  targetCloseDistance: 0.1
+  keepDis: 8
+  keepWeight: 0.6
+  targetCloseDistance: 0.5
   stopDis: 0.001
+--- !u!95 &1674196152
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674196148}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4704e640c3d58fa4f9e97de168724b06, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1818458606
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +594,10 @@ MonoBehaviour:
   spawnerFish: {fileID: 33556537135479242, guid: 3fd696a086978c243b57edcfbcc47cb3,
     type: 3}
   spawnerRoot: {fileID: 352950453}
-  GenerateRange: 10
+  GenerateRange: 40
+  GenerateCount: 100
+  FishMinSpeed: 70
+  FishMaxSpeed: 400
 --- !u!1 &2096874469
 GameObject:
   m_ObjectHideFlags: 0
