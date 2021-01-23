@@ -27,12 +27,12 @@ namespace E_A_DEMO_FISH_ALGORITHM.ecs.system
         // [BurstCompile]
         protected override void OnUpdate()
         {
-            var fishPosArray =
+            NativeArray<Translation> fishPosArray =
                 fishPosQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out var findFishPosJobHandle);
-            var fishMovementArray =
+            NativeArray<ECSFishMovementData> fishMovementArray =
                 fishPosQuery.ToComponentDataArrayAsync<ECSFishMovementData>(Allocator.TempJob,
                     out var findFishMovementJobHandle);
-            var targetMomentArray =
+            NativeArray<Translation> targetMomentArray =
                 targetPosQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob,
                     out var findTargetPosJobHandle);
             Dependency = JobHandle.CombineDependencies(Dependency, findFishPosJobHandle, findFishMovementJobHandle);
