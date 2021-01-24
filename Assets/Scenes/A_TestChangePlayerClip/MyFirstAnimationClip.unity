@@ -285,8 +285,10 @@ MonoBehaviour:
     type: 3}
   GraphPrefab: {fileID: 1726171319571385981, guid: b71454fd8a2b30f4b8f1c1358f5bb19d,
     type: 3}
-  CountX: 50
-  CountY: 50
+  CountX: 32
+  CountY: 32
+  startPosition: {x: 0, y: 0}
+  spawnerTag: 0
 --- !u!1 &177311044
 GameObject:
   m_ObjectHideFlags: 0

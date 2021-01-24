@@ -12,6 +12,7 @@ namespace test
     {
         [SerializeField] private Mesh _mesh;
         [SerializeField] private Material _material;
+        public int GenerateCount = 1000;
 
         private void Start()
         {
@@ -26,7 +27,7 @@ namespace test
                 typeof(MoveSpeedComponent)
             );
             // 此处的NativeArray仅用于给Entities赋值，所以使用Allocator的Temp存储类型
-            NativeArray<Entity> entitiesArray = new NativeArray<Entity>(1000, Allocator.Temp);
+            NativeArray<Entity> entitiesArray = new NativeArray<Entity>(GenerateCount, Allocator.Temp);
             entityManager.CreateEntity(entityArchetype, entitiesArray);
 
             for (var i = 0; i < entitiesArray.Length; i++)
