@@ -10,5 +10,3 @@ github地址: https://github.com/Dead-Rabbit/Unity.Animation.Samples
 演示视频：https://www.bilibili.com/video/BV1yz4y1S7rf
 
 项目路径：Assets/Scenes/E_A_DEMO_FISH_ALGORITHM
-
-鱼的核心复杂度在于
